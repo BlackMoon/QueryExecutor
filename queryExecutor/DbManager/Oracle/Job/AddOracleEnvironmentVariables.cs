@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using queryExecutor.CQRS.Job;
 
 namespace queryExecutor.DbManager.Oracle.Job
@@ -10,9 +11,9 @@ namespace queryExecutor.DbManager.Oracle.Job
     {
         private readonly OracleEnvironmentConfiguration _config;
         
-        public AddOracleEnvironmentVariables(OracleEnvironmentConfiguration config)
+        public AddOracleEnvironmentVariables()
         {
-            _config = config;
+           _config = (OracleEnvironmentConfiguration)ConfigurationManager.GetSection("oracleEnvironment");
         }
 
         public void Run()

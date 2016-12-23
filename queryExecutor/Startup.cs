@@ -12,6 +12,7 @@ using queryExecutor.CQRS.Job;
 using queryExecutor.CQRS.Query;
 using queryExecutor.DbManager;
 using queryExecutor.DbManager.Oracle;
+using queryExecutor.DbManager.Oracle.Job;
 using queryExecutor.Domain.DscQueryData;
 using queryExecutor.Domain.DscQueryParameter;
 
@@ -19,6 +20,11 @@ using queryExecutor.Domain.DscQueryParameter;
 
 namespace queryExecutor
 {
+    public class A
+    {
+        public int B { get; set; }
+    }
+
     public class Startup
     {
         public void Configuration(IAppBuilder appBuilder)
@@ -51,8 +57,7 @@ namespace queryExecutor
                 reuse: Reuse.InWebRequest,
                 made: Made.Of(() => DbManagerFactory.CreateDbManager(Arg.Of<string>("ProviderName"), null), requestIgnored => string.Empty)
                 );
-
-            container.UseInstance((OracleEnvironmentConfiguration)ConfigurationManager.GetSection("oracleEnvironment"), serviceKey: "OracleEnvironment");
+           
             container.UseInstance(container);
             #endregion
 

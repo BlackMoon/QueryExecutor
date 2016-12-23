@@ -4,13 +4,28 @@ using System.Configuration;
 
 namespace queryExecutor.DbManager.Oracle
 {
+    public interface IOracleEnvironmentConfiguration
+    {
+        string Oracle_Home { get; }
+
+        string Nls_Lang { get; }
+
+        string Path { get; }
+
+        string Tns_Admin { get; }
+    }
+
     /// <summary>
     /// Oracle. Настройки среды
     /// </summary>
-    public class OracleEnvironmentConfiguration : ConfigurationSection
+    public class OracleEnvironmentConfiguration : ConfigurationSection, IOracleEnvironmentConfiguration
     {
         [ConfigurationProperty("oracleHome")]
-        public string Oracle_Home => (string)this["oracleHome"];
+        public string Oracle_Home
+        {
+            get { return (string) this["oracleHome"]; }
+            set { this["oracleHome"] = value; }
+        }
 
         [ConfigurationProperty("nlsLang" )]
         public string Nls_Lang => (string)this["nlsLang"];
