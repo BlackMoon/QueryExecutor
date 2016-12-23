@@ -9,7 +9,7 @@ namespace queryExecutor.Domain.DscQueryParameter
     {
         [Key]
         public long No { get; set; }
-
+        
         public string FieldCode { get; set; }
 
         public long ValueTypeNo { get; set; }

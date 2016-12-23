@@ -30,9 +30,10 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;DBCONTEXT</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -45,6 +46,14 @@
   <ItemGroup>
     <Reference Include="Antlr3.Runtime, Version=3.4.1.9004, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DryIoc, Version=2.8.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DryIoc.dll.2.8.2\lib\net45\DryIoc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="DryIoc.WebApi, Version=2.1.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DryIoc.WebApi.dll.2.1.1\lib\net45\DryIoc.WebApi.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -112,14 +121,19 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Oracle.ManagedDataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
-      <HintPath>..\packages\Oracle.ManagedDataAccess.12.1.24160719\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    <Reference Include="Oracle.DataAccess, Version=4.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=x86">
+      <HintPath>..\packages\odac.x86.12.1.2400\lib\net40\Oracle.DataAccess.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Oracle.DataAccess.EntityFramework, Version=6.121.2.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.DataAccess.EntityFramework.12.1.2400\lib\net40\Oracle.DataAccess.EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Spatial, Version=5.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Spatial.5.6.0\lib\net40\System.Spatial.dll</HintPath>
@@ -203,10 +217,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\CustomersController.cs" />
-    <Compile Include="Controllers\DscQParametersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ParametersController.cs" />
+    <Compile Include="CQRS\Job\IJob.cs" />
+    <Compile Include="CQRS\Job\IJobDispatcher.cs" />
+    <Compile Include="CQRS\Job\IStartupJob.cs" />
+    <Compile Include="CQRS\Job\JobDispatcher.cs" />
     <Compile Include="CQRS\Query\IQuery.cs" />
     <Compile Include="CQRS\Query\IQueryDispatcher.cs" />
     <Compile Include="CQRS\Query\IQueryHandler.cs" />
@@ -215,8 +231,14 @@
     <Compile Include="DbManager\DbManagerFactory.cs" />
     <Compile Include="DbManager\IDbManager.cs" />
     <Compile Include="DbManager\IDbManagerAsync.cs" />
+    <Compile Include="DbManager\Oracle\Job\AddOracleDataProvider.cs" />
+    <Compile Include="DbManager\Oracle\Job\AddOracleEnvironmentVariables.cs" />
+    <Compile Include="DbManager\Oracle\OracleDbConfiguration.cs" />
+    <Compile Include="DbManager\Oracle\OracleDbContext.cs" />
     <Compile Include="DbManager\Oracle\OracleDbManager.cs" />
+    <Compile Include="DbManager\Oracle\OracleEnvironmentConfiguration.cs" />
     <Compile Include="DbManager\ProviderNameAttribute.cs" />
+    <Compile Include="Domain\DscQueryData\DscQData.cs" />
     <Compile Include="Domain\DscQueryParameter\DscQParameter.cs" />
     <Compile Include="Domain\DscQueryParameter\Query\DscQParameterQuery.cs" />
     <Compile Include="Domain\DscQueryParameter\Query\DscQParameterQueryHandler.cs" />
@@ -224,8 +246,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\queryExecutorContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>

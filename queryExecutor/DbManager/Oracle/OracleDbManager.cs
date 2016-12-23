@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Oracle.ManagedDataAccess.Client;
+using Oracle.DataAccess.Client;
 
 namespace queryExecutor.DbManager.Oracle
 {
@@ -25,7 +26,7 @@ namespace queryExecutor.DbManager.Oracle
         /// <summary>
         /// DbContext
         /// </summary>
-        private OracleContext _dbContext;
+        private OracleDbContext _dbContext;
 
         public DbContext DbContext
         {
@@ -34,7 +35,7 @@ namespace queryExecutor.DbManager.Oracle
                 if (_dbContext == null)
                 {
                     ExecuteNonQuery(CommandType.StoredProcedure, "SYS$INSTANCE.INIT");
-                    _dbContext = new OracleContext(DbConnection, false);
+                    _dbContext = new OracleDbContext(DbConnection, false);
                 }
 
                 return _dbContext;

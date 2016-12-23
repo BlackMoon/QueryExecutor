@@ -1,23 +1,23 @@
 ﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+using DryIoc;
 
 namespace queryExecutor.CQRS.Query
 {
     public class QueryDispatcher : IQueryDispatcher
     {
-        private readonly IServiceProvider _serviceProvider;
+        private readonly IContainer _container;
 
-        public QueryDispatcher(IServiceProvider serviceProvider)
+        public QueryDispatcher(IContainer container)
         {
-            _serviceProvider = serviceProvider;
+            _container = container;
         }
 
         public TResult Dispatch<TParameter, TResult>(TParameter query) where TParameter : IQuery where TResult : IQueryResult
         {
             if (query == null)
                 throw new ArgumentNullException(nameof(query));
-            
-            var handler = _serviceProvider.GetRequiredService<IQueryHandler<TParameter, TResult>>();
+
+            var handler = _container.Resolve<IQueryHandler<TParameter, TResult>>();
             return handler.Execute(query);
         }
     }

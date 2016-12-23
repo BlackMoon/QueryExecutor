@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using queryExecutor.CQRS.Query;
 using queryExecutor.DbManager;
@@ -16,24 +15,31 @@ namespace queryExecutor.Domain.DscQueryParameter.Query
 
         public DscQParameterQueryResult Execute(DscQParameterQuery query)
         {
-            IList<DscQParameter> dscQParameters = new List<DscQParameter>();
+            IQueryable<DscQParameter> dscQParameters = null;
             try
             {
+                string sql = @"SELECT p.no, p.field_Code fieldCode, ff.value_type_no valueTypeNo FROM DSC$QUERY_PARAMETERS p
+                               JOIN TDF$FLEX_FIELDS ff ON ff.no = p.field_no 
+                               WHERE p.query_no = dsc$query_service.code_path_to_no(:p0, :p1)";
+
                 _dbManager.Open($"Data Source={query.DataSource};User Id={query.UserId};Password={query.Password}");
 
-               
-                
+                dscQParameters = _dbManager
+                    .DbContext
+                    .Set<DscQParameter>()
+                    .SqlQuery(sql, query.Path, query.Code)
+                    .AsQueryable();
             }
             catch (Exception ex)
             {
-                // ignored
+                System.Diagnostics.Debug.WriteLine(ex.Message);
             }
             finally
             {
                 _dbManager.Close();
             }
 
-            return new DscQParameterQueryResult() { Items = dscQParameters.AsQueryable() };
+            return new DscQParameterQueryResult() { Items = dscQParameters };
         }
     }
 }
