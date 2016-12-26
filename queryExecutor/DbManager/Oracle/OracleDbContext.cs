@@ -1,10 +1,13 @@
 ﻿using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
+using CodeFirstStoreFunctions;
+using queryExecutor.Domain.DscQColumn;
 using queryExecutor.Domain.DscQueryParameter;
 
 namespace queryExecutor.DbManager.Oracle
 {
+
     [DbConfigurationType(typeof(OracleDbConfiguration))]
 
     public class OracleDbContext : DbContext
@@ -13,6 +16,8 @@ namespace queryExecutor.DbManager.Oracle
         {
             Database.SetInitializer<OracleDbContext>(null);
         }
+
+        public DbSet<DscQColumn> DscQColumns { get; set; }
 
         public DbSet<DscQParameter> DscQParameters { get; set; }
 
@@ -27,7 +32,7 @@ namespace queryExecutor.DbManager.Oracle
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema(string.Empty);
-        }
 
+        }
     }
 }

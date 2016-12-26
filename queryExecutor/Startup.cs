@@ -1,5 +1,4 @@
-﻿using System.Configuration;
-using System.Web;
+﻿using System.Web;
 using System.Web.Http;
 using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
@@ -8,11 +7,10 @@ using DryIoc.WebApi;
 using Microsoft.OData.Edm;
 using Microsoft.Owin;
 using Owin;
-using queryExecutor.CQRS.Job;
+using queryExecutor.CQRS.Command;
 using queryExecutor.CQRS.Query;
 using queryExecutor.DbManager;
-using queryExecutor.DbManager.Oracle;
-using queryExecutor.DbManager.Oracle.Job;
+using queryExecutor.Domain.DscQColumn;
 using queryExecutor.Domain.DscQueryData;
 using queryExecutor.Domain.DscQueryParameter;
 
@@ -20,11 +18,6 @@ using queryExecutor.Domain.DscQueryParameter;
 
 namespace queryExecutor
 {
-    public class A
-    {
-        public int B { get; set; }
-    }
-
     public class Startup
     {
         public void Configuration(IAppBuilder appBuilder)
@@ -37,7 +30,7 @@ namespace queryExecutor
                 config.Count().Filter().OrderBy().Expand().Select().MaxTop(null);
 
             config.MapODataServiceRoute(routeName: "DscQData", routePrefix: "{datasource}/{path}/{code}/{parameters}/odata", model: GetDataEdmModel());
-            config.MapODataServiceRoute(routeName: "DscQParameters", routePrefix: "{datasource}/{path}/{code}/odata", model: GetParameterEdmModel());
+            config.MapODataServiceRoute(routeName: "DscQuery", routePrefix: "{datasource}/{path}/{code}/odata", model: GetQueryEdmModel());
 
             #region DI
             IContainer container = new Container(rules => rules.WithoutThrowOnRegisteringDisposableTransient()).WithWebApi(config);
@@ -45,7 +38,7 @@ namespace queryExecutor
             container.RegisterMany(new [] { GetType().Assembly }, (registrator, types, type) =>
             {
                 // all dispatchers --> Reuse.InCurrentScope
-                IReuse reuse = type.IsAssignableTo(typeof(IQueryDispatcher))
+                IReuse reuse = type.IsAssignableTo(typeof(ICommandDispatcher)) || type.IsAssignableTo(typeof(IQueryDispatcher))
                     ? Reuse.InCurrentScope
                     : Reuse.Transient;
 
@@ -62,10 +55,6 @@ namespace queryExecutor
             #endregion
 
             appBuilder.UseWebApi(config);
-            
-            // Startup Jobs
-            IJobDispatcher dispatcher = container.Resolve<IJobDispatcher>(IfUnresolved.ReturnDefault);
-            dispatcher?.Dispatch<IStartupJob>();
         }
 
         /// <summary>
@@ -81,12 +70,13 @@ namespace queryExecutor
         }
 
         /// <summary>
-        /// Entity Data Model для DscQParameter
+        /// Entity Data Model для DscQuery
         /// </summary>
         /// <returns></returns>
-        private IEdmModel GetParameterEdmModel()
+        private IEdmModel GetQueryEdmModel()
         {
             ODataModelBuilder builder = new ODataConventionModelBuilder();
+            builder.EntitySet<DscQColumn>("Columns");
             builder.EntitySet<DscQParameter>("Parameters");
 
             return builder.GetEdmModel();

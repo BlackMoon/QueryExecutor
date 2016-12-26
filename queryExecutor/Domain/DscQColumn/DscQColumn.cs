@@ -1,13 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace queryExecutor.Domain.DscQueryParameter
+namespace queryExecutor.Domain.DscQColumn
 {
     /// <summary>
-    /// dsc$query_parameter
+    /// dsc$query_columns
     /// </summary>
-    [Table("DSC$QUERY_PARAMETERS")]
-    public class DscQParameter
+    [Table("DSC$QUERY_COLUMNS")]
+    public class DscQColumn
     {
         [Key]
         [Column("NO")]
@@ -18,7 +18,8 @@ namespace queryExecutor.Domain.DscQueryParameter
 
         [Column("FIELD_CODE")]
         public string FieldCode { get; set; }
-
-        //public long ValueTypeNo { get; set; }
+        
+        [Column("VALUE_TYPE_NO")]
+        public EValueType? ValueType { get; set; }
     }
 }
