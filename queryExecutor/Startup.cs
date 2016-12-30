@@ -1,23 +1,80 @@
-﻿using System.Web;
+﻿using System;
+using System.Linq;
+using System.Net.Http;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http;
 using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
 using DryIoc;
 using DryIoc.WebApi;
-using Microsoft.OData.Edm;
 using Microsoft.Owin;
 using Owin;
-using queryExecutor.CQRS.Command;
 using queryExecutor.CQRS.Query;
 using queryExecutor.DbManager;
 using queryExecutor.Domain.DscQColumn;
 using queryExecutor.Domain.DscQueryData;
 using queryExecutor.Domain.DscQueryParameter;
+using Microsoft.OData.Edm;
 
 [assembly: OwinStartup("Startup", typeof(queryExecutor.Startup))]
 
 namespace queryExecutor
 {
+    /// <summary>
+    /// MessageHandler для DscQRoute
+    /// <para>Заменяет / в сегменте {path} в odata-url вида {datasource}/{path}/odata. </para>
+    /// </summary>
+    public class DscQRouteHandler : DelegatingHandler
+    {
+        private const int WordLength = 2;
+        private const string Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789~!";
+
+        private static string _randomWord;
+
+        public static string RandomWord
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_randomWord))
+                {
+                    Random rnd = new Random();
+                    _randomWord = new string(Enumerable.Repeat(Chars, WordLength).Select(s => s[rnd.Next(s.Length)]).ToArray());
+                }
+
+                return _randomWord;
+            }
+        }
+
+        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        {
+            string uri = request.RequestUri.LocalPath;
+
+            Regex rgx = new Regex("^/[\\w.-]+/(.+)/odata");
+            Match matches = rgx.Match(uri);
+
+            if (matches.Length > 0)
+            {
+                foreach (Match m in rgx.Matches(uri))
+                {
+                    if (m.Groups.Count > 1)
+                    {
+                        string oldValue = m.Groups[1].Value,
+                            newValue = oldValue.Replace("/", RandomWord);
+
+                        uri = uri.Replace(oldValue, newValue);
+                    }
+                }
+
+                request.RequestUri = new Uri($"{request.RequestUri.Scheme}://{request.RequestUri.Host}:{request.RequestUri.Port}{uri}");
+            }
+
+            return base.SendAsync(request, cancellationToken);
+        }
+    }
+
     public class Startup
     {
         public void Configuration(IAppBuilder appBuilder)
@@ -29,23 +86,35 @@ namespace queryExecutor
             if (HttpContext.Current.Request.IsLocal)
                 config.Count().Filter().OrderBy().Expand().Select().MaxTop(null);
 
-            config.MapODataServiceRoute(routeName: "DscQData", routePrefix: "{datasource}/{path}/{code}/{parameters}/odata", model: GetDataEdmModel());
-            config.MapODataServiceRoute(routeName: "DscQuery", routePrefix: "{datasource}/{path}/{code}/odata", model: GetQueryEdmModel());
+            // DscQRouteHandler
+            config.MessageHandlers.Add(new DscQRouteHandler());
 
+            config.MapODataServiceRoute(
+                routeName: "DscQuery", 
+                routePrefix: "{datasource}/{path}/odata", 
+                model: GetQueryEdmModel());
+                
             #region DI
             IContainer container = new Container(rules => rules.WithoutThrowOnRegisteringDisposableTransient()).WithWebApi(config);
             
             container.RegisterMany(new [] { GetType().Assembly }, (registrator, types, type) =>
             {
-                // all dispatchers --> Reuse.InCurrentScope
-                IReuse reuse = type.IsAssignableTo(typeof(ICommandDispatcher)) || type.IsAssignableTo(typeof(IQueryDispatcher))
-                    ? Reuse.InCurrentScope
-                    : Reuse.Transient;
+                System.Type[] interfaces = type.GetInterfaces();
 
-                registrator.RegisterMany(types, type, reuse);
+                bool assignedFromDispatcher = interfaces.Any(i => i.FullName == typeof(IQueryDispatcher).FullName);
+                if (assignedFromDispatcher || 
+                    interfaces.Any(i => i.FullName == typeof(IQuery).FullName || (i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>))))
+                {
+                    // all dispatchers --> Reuse.InCurrentScope
+                    IReuse reuse = assignedFromDispatcher
+                        ? Reuse.InCurrentScope
+                        : Reuse.Transient;
+
+                    registrator.RegisterMany(types, type, reuse);
+                }
             });
 
-            container.RegisterInstance("Oracle.DataAccess.Client", serviceKey: "ProviderName");
+            container.RegisterInstance(System.Configuration.ConfigurationManager.AppSettings["ProviderName"], serviceKey: "ProviderName");
             container.Register(
                 reuse: Reuse.InWebRequest,
                 made: Made.Of(() => DbManagerFactory.CreateDbManager(Arg.Of<string>("ProviderName"), null), requestIgnored => string.Empty)
@@ -58,18 +127,6 @@ namespace queryExecutor
         }
 
         /// <summary>
-        /// Entity Data Model для DscQData
-        /// </summary>
-        /// <returns></returns>
-        private IEdmModel GetDataEdmModel()
-        {
-            ODataModelBuilder modelBuilder = new ODataConventionModelBuilder();
-            modelBuilder.EntitySet<DscQData>("Data");
-            
-            return modelBuilder.GetEdmModel();
-        }
-
-        /// <summary>
         /// Entity Data Model для DscQuery
         /// </summary>
         /// <returns></returns>
@@ -78,6 +135,7 @@ namespace queryExecutor
             ODataModelBuilder builder = new ODataConventionModelBuilder();
             builder.EntitySet<DscQColumn>("Columns");
             builder.EntitySet<DscQParameter>("Parameters");
+            builder.EntitySet<DscQData>("Results");
 
             return builder.GetEdmModel();
         }

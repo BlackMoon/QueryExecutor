@@ -19,6 +19,7 @@ namespace queryExecutor.Domain.DscQueryParameter
         [Column("FIELD_CODE")]
         public string FieldCode { get; set; }
 
-        //public long ValueTypeNo { get; set; }
+        [NotMapped]
+        public string Value { get; set; }
     }
 }

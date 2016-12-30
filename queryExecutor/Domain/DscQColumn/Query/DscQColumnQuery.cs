@@ -10,8 +10,6 @@ namespace queryExecutor.Domain.DscQColumn.Query
 
         public string UserId { get; set; }
 
-        public string Code { get; set; }
-
         public string Path { get; set; }
     }
 }

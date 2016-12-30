@@ -18,12 +18,11 @@ namespace queryExecutor.Controllers
 
         // GET: odata/Parameters
         [EnableQuery]
-        public IQueryable<DscQParameter> Get([FromODataUri] string datasource, [FromODataUri] string path, [FromODataUri] string code)
+        public IQueryable<DscQParameter> Get([FromODataUri] string datasource, [FromODataUri] string path)
         {
             DscQParameterQuery parameterQuery = new DscQParameterQuery()
             {
-                Code = code,
-                Path = path,
+                Path = path.Replace(DscQRouteHandler.RandomWord, "\\"),
                 DataSource = datasource,
                 UserId = "ECO",
                 Password = "ECO"
@@ -34,12 +33,11 @@ namespace queryExecutor.Controllers
         }
 
         // GET: odata/Parameters(5)
-        public SingleResult<DscQParameter> Get([FromODataUri] string datasource, [FromODataUri] string path, [FromODataUri] string code, [FromODataUri] long key)
+        public SingleResult<DscQParameter> Get([FromODataUri] string datasource, [FromODataUri] string path, [FromODataUri] long key)
         {
             DscQParameterQuery parameterQuery = new DscQParameterQuery()
             {
-                Code = code,
-                Path = path,
+                Path = path.Replace(DscQRouteHandler.RandomWord, "\\"),
                 DataSource = datasource,
                 UserId = "ECO",
                 Password = "ECO"
