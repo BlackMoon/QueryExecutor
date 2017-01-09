@@ -146,8 +146,7 @@ namespace queryExecutor.DbManager.Oracle
 
         public IDataReader ExecuteReader(CommandType commandType, string commandText)
         {
-            // ReSharper disable once UseObjectOrCollectionInitializer
-            DbCommand = new OracleCommand();
+            DbCommand = new OracleCommand() { BindByName = true };
             PrepareCommand(DbCommand, DbConnection, Transaction, commandType, commandText);
             
             DataReader = DbCommand.ExecuteReader();
@@ -158,7 +157,7 @@ namespace queryExecutor.DbManager.Oracle
 
         public DataSet ExecuteDataSet(CommandType commandType, string commandText)
         {
-            DbCommand = new OracleCommand(commandText);
+            DbCommand = new OracleCommand(commandText) { BindByName = true };
             
             IDbDataAdapter dataAdapter = new OracleDataAdapter();
             dataAdapter.SelectCommand = DbCommand;
@@ -174,7 +173,7 @@ namespace queryExecutor.DbManager.Oracle
         {
             Open();
 
-            DbCommand = new OracleCommand();
+            DbCommand = new OracleCommand() { BindByName = true };
             PrepareCommand(DbCommand, DbConnection, Transaction, commandType, commandText);
 
             object returnValue = DbCommand.ExecuteScalar();
@@ -190,7 +189,7 @@ namespace queryExecutor.DbManager.Oracle
         {
             Open();
 
-            DbCommand = new OracleCommand();
+            DbCommand = new OracleCommand() { BindByName = true };
             PrepareCommand(DbCommand, DbConnection, Transaction, commandType, commandText);
             
             int returnValue = DbCommand.ExecuteNonQuery();

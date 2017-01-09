@@ -8,6 +8,6 @@ namespace queryExecutor.Domain.DscQueryData
         [Key]
         public long No { get; set; }
 
-        public IDictionary<string, object> DynamicProperties { get; set; }
+        public IDictionary<string, object> DynamicProperties { get; } = new Dictionary<string, object>();
     }
 }

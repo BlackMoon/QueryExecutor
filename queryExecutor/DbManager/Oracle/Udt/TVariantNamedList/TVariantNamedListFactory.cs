@@ -8,7 +8,7 @@ namespace queryExecutor.DbManager.Oracle.Udt.TVariantNamedList
     /// </summary>
     [OracleCustomTypeMapping("T_VARIANT_NAMED_LIST")]
     [SuppressMessage("ReSharper", "InconsistentNaming")]
-    public class VariantNamedListFactory : IOracleCustomTypeFactory
+    public class TVariantNamedListFactory : IOracleCustomTypeFactory
     {
         public IOracleCustomType CreateObject()
         {
