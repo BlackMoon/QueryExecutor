@@ -29,7 +29,7 @@ namespace queryExecutor
     /// </summary>
     public class DscQRouteHandler : DelegatingHandler
     {
-        private const int WordLength = 2;
+        private const int WordLength = 3;
         private const string Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789~!";
 
         private static string _randomWord;

@@ -76,7 +76,8 @@ namespace queryExecutor.Domain.DscQueryData.Query
 
                         foreach (string column in columnNames)
                         {
-                            dscQData.DynamicProperties[column] = row[column];
+                            object v = row[column];
+                            dscQData.DynamicProperties[column] = (v != DBNull.Value) ? v : null;
                         }
                         dscQDatas.Add(dscQData);
                     }
