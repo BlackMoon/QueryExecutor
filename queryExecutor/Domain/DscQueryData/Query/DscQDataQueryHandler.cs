@@ -58,10 +58,9 @@ namespace queryExecutor.Domain.DscQueryData.Query
                     // проверка на наличие ключевого поля
                     bool keyFieldExists = dt.Columns.Contains(KeyField);
 
-                    string[] columnNames = dt.Columns.Cast<DataColumn>()
+                    IEnumerable<string> columnNames = dt.Columns.Cast<DataColumn>()
                         .Select(c => c.ColumnName)
-                        .Where(c => !c.Equals(KeyField, StringComparison.OrdinalIgnoreCase))
-                        .ToArray();
+                        .Where(c => !c.Equals(KeyField, StringComparison.OrdinalIgnoreCase));
 
                     dscQDatas = dt.AsEnumerable()
                         .Select((r, i) =>
