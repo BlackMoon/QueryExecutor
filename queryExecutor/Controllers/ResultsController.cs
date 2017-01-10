@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Security.Claims;
@@ -32,6 +33,7 @@ namespace queryExecutor.Controllers
             string user = cp.FindFirst(ClaimTypes.Name)?.Value;
             string pswd = cp.FindFirst(BasicClaimTypes.Password)?.Value;
 
+            // DscQParameters (из кеша)
             DscQParameterQuery parameterQuery = new DscQParameterQuery()
             {
                 Path = path.Replace(DscQRouteHandler.RandomWord, "\\"),
@@ -50,7 +52,16 @@ namespace queryExecutor.Controllers
                 Password = pswd,
                 Parameters = Request.GetQueryNameValuePairs()
                     .Where(p => !p.Key.StartsWith("$"))
-                    .Select(p => new DscQParameter() { FieldCode = p.Key, Value = p.Value })
+                    .Select(p => new DscQParameter()
+                    {
+                        FieldCode = p.Key,
+                        Value = p.Value,
+                        // valueType из списка DscQParameter's
+                        ValueType = parameterResult
+                            .Items
+                            .FirstOrDefault(i => i.FieldCode.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
+                            ?.ValueType
+                    })
                     .ToList()
             };
 

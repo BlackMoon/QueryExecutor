@@ -17,6 +17,11 @@ namespace queryExecutor.Domain.DscQueryParameter.Query
             _dbManager = dbManager;
         }
 
+        /// <summary>
+        /// Результат выборки (кешируется)
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         public DscQParameterQueryResult Execute(DscQParameterQuery query)
         {
             IEnumerable<DscQParameter> dscQParameters = Enumerable.Empty<DscQParameter>();

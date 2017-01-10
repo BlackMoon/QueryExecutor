@@ -29,9 +29,45 @@ namespace queryExecutor.Domain.DscQueryData.Query
             try
             {
                 _dbManager.Open($"Data Source={query.DataSource};User Id={query.UserId};Password={query.Password}");
+                
+                IEnumerable<TVariantNamed> variantNameds = query.Parameters.Select(p =>
+                {
+                    TVariantNamed variantNamed = new TVariantNamed() { Name = p.FieldCode };
 
-                // todo заполнить valuetypeno
-                IEnumerable<TVariantNamed> variantNameds = query.Parameters.Select(p => new TVariantNamed());
+                    switch (p.ValueType)
+                    {
+                        case EValueType.DATE:
+
+                            DateTime dtvalue;
+                            if (DateTime.TryParse(p.Value, out dtvalue))
+                                variantNamed.ValueDate = dtvalue;
+
+                            break;
+
+                        case EValueType.NUMBER:
+
+                            decimal dvalue;
+                            if (decimal.TryParse(p.Value, out dvalue))
+                                variantNamed.ValueNumber = dvalue;
+
+                            break;
+
+                        case EValueType.OBJECT:
+
+                            long lvalue;
+                            if (long.TryParse(p.Value, out lvalue))
+                                variantNamed.ValueObject = lvalue;
+
+                            break;
+
+                        default:
+
+                            variantNamed.ValueVarchar2 = Convert.ToString(p.Value);
+                            break;
+                    }
+                    return variantNamed;
+                });
+
                 TVariantNamedList variantNamedList = TVariantNamedList.Create((OracleConnection) _dbManager.DbConnection, variantNameds.ToArray());
 
                 OracleParameter pParams = new OracleParameter("pParams", OracleDbType.Object, ParameterDirection.Input)

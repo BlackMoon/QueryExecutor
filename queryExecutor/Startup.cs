@@ -21,7 +21,6 @@ using queryExecutor.Domain.DscQColumn;
 using queryExecutor.Domain.DscQueryData;
 using queryExecutor.Domain.DscQueryParameter;
 using Microsoft.OData.Edm;
-using queryExecutor.Domain.DscQueryParameter.Query;
 using queryExecutor.Interception;
 using queryExecutor.Interception.Attribute;
 
@@ -74,7 +73,7 @@ namespace queryExecutor
                     }
                 }
 
-                request.RequestUri = new Uri($"{request.RequestUri.Scheme}://{request.RequestUri.Host}:{request.RequestUri.Port}{uri}");
+                request.RequestUri = new Uri($"{request.RequestUri.Scheme}://{request.RequestUri.Host}:{request.RequestUri.Port}{uri}{request.RequestUri.Query}");
             }
 
             return base.SendAsync(request, cancellationToken);

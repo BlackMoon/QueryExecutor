@@ -17,13 +17,13 @@ namespace queryExecutor.Interception
 
         public override void Intercept(IInvocation invocation)
         {
-            string key = invocation.Method.DeclaringType + invocation.Method.Name + invocation.Arguments.Sum(a => a.GetHashCode());
+            string key = invocation.Method.Name + invocation.Arguments.Sum(a => a.GetHashCode());
 
-            invocation.ReturnValue = _cacheManager.Get(key);
+            invocation.ReturnValue = _cacheManager.Get(key, invocation.Method.DeclaringType?.FullName);
             if (invocation.ReturnValue == null)
             {
                 base.Intercept(invocation);
-                _cacheManager.Add(key, invocation.ReturnValue);
+                _cacheManager.Add(key, invocation.ReturnValue, invocation.Method.DeclaringType?.FullName);
             }
         }
     }
