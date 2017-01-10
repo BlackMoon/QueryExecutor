@@ -8,6 +8,7 @@ using queryExecutor.Domain.DscQueryData;
 using queryExecutor.CQRS.Query;
 using queryExecutor.Domain.DscQueryData.Query;
 using queryExecutor.Domain.DscQueryParameter;
+using queryExecutor.Domain.DscQueryParameter.Query;
 using queryExecutor.Identity;
 
 namespace queryExecutor.Controllers
@@ -28,12 +29,25 @@ namespace queryExecutor.Controllers
         {
             ClaimsPrincipal cp = (ClaimsPrincipal)User;
 
+            string user = cp.FindFirst(ClaimTypes.Name)?.Value;
+            string pswd = cp.FindFirst(BasicClaimTypes.Password)?.Value;
+
+            DscQParameterQuery parameterQuery = new DscQParameterQuery()
+            {
+                Path = path.Replace(DscQRouteHandler.RandomWord, "\\"),
+                DataSource = datasource,
+                UserId = user,
+                Password = pswd
+            };
+
+            DscQParameterQueryResult parameterResult = _queryDispatcher.Dispatch<DscQParameterQuery, DscQParameterQueryResult>(parameterQuery);
+
             DscQDataQuery dataQuery = new DscQDataQuery()
             {
                 Path = path.Replace(DscQRouteHandler.RandomWord, "\\"),
                 DataSource = datasource,
-                UserId = cp.FindFirst(ClaimTypes.Name)?.Value,
-                Password = cp.FindFirst(BasicClaimTypes.Password)?.Value,
+                UserId = user,
+                Password = pswd,
                 Parameters = Request.GetQueryNameValuePairs()
                     .Where(p => !p.Key.StartsWith("$"))
                     .Select(p => new DscQParameter() { FieldCode = p.Key, Value = p.Value })

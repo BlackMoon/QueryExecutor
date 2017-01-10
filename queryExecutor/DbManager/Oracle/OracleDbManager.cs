@@ -57,6 +57,7 @@ namespace queryExecutor.DbManager.Oracle
 
         private readonly IList<OracleParameter> _dbParameters = new List<OracleParameter>();
 
+        // ReSharper disable once CoVariantArrayConversion
         public IDbDataParameter[] DbParameters => _dbParameters.ToArray();
         
 

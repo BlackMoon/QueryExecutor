@@ -1,10 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using queryExecutor.CQRS.Query;
 
 namespace queryExecutor.Domain.DscQueryParameter.Query
 {
     public class DscQParameterQueryResult : IQueryResult
     {
-        public IQueryable<DscQParameter> Items { get; set; }
+        public IEnumerable<DscQParameter> Items { get; set; }
     }
 }

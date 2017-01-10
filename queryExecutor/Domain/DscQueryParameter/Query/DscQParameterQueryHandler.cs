@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using queryExecutor.CQRS.Query;
 using queryExecutor.DbManager;
+using queryExecutor.Interception;
+using queryExecutor.Interception.Attribute;
 
 namespace queryExecutor.Domain.DscQueryParameter.Query
 {
+    [InterceptedObject(InterceptorType = typeof(CacheInterceptor), ServiceInterfaceType = typeof(IQueryHandler<DscQParameterQuery, DscQParameterQueryResult>))]
     public class DscQParameterQueryHandler : IQueryHandler<DscQParameterQuery, DscQParameterQueryResult>
     {
         private readonly IDbManager _dbManager;
@@ -15,12 +19,12 @@ namespace queryExecutor.Domain.DscQueryParameter.Query
 
         public DscQParameterQueryResult Execute(DscQParameterQuery query)
         {
-            IQueryable<DscQParameter> dscQParameters = null;
+            IEnumerable<DscQParameter> dscQParameters = Enumerable.Empty<DscQParameter>();
             try
             {
                 string sql = @"SELECT p.no, p.name, p.field_Code fieldCode, ff.value_type_no valueType FROM DSC$QUERY_PARAMETERS p
                                JOIN TDF$FLEX_FIELDS ff ON ff.no = p.field_no 
-                               WHERE p.query_no = dsc$utils.query_find(:p0)";
+                               WHERE p.query_no = dsc$utils.query_find(:p0) AND p.is_hidden = 'F'";
 
                 _dbManager.Open($"Data Source={query.DataSource};User Id={query.UserId};Password={query.Password}");
 
@@ -28,7 +32,7 @@ namespace queryExecutor.Domain.DscQueryParameter.Query
                     .DbContext
                     .Set<DscQParameter>()
                     .SqlQuery(sql, query.Path)
-                    .AsQueryable();
+                    .ToList();
             }
             catch (Exception ex)
             {

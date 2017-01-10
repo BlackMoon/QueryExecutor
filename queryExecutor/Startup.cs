@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Net.Http;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,6 +9,8 @@ using System.Web;
 using System.Web.Http;
 using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
+using CacheManager.Core;
+using Castle.DynamicProxy;
 using DryIoc;
 using DryIoc.WebApi;
 using Microsoft.Owin;
@@ -18,6 +21,9 @@ using queryExecutor.Domain.DscQColumn;
 using queryExecutor.Domain.DscQueryData;
 using queryExecutor.Domain.DscQueryParameter;
 using Microsoft.OData.Edm;
+using queryExecutor.Domain.DscQueryParameter.Query;
+using queryExecutor.Interception;
+using queryExecutor.Interception.Attribute;
 
 [assembly: OwinStartup("Startup", typeof(queryExecutor.Startup))]
 
@@ -99,11 +105,13 @@ namespace queryExecutor
             
             container.RegisterMany(new [] { GetType().Assembly }, (registrator, types, type) =>
             {
-                System.Type[] interfaces = type.GetInterfaces();
+                Type[] interfaces = type.GetInterfaces();
 
                 bool assignedFromDispatcher = interfaces.Any(i => i.FullName == typeof(IQueryDispatcher).FullName);
                 if (assignedFromDispatcher || 
-                    interfaces.Any(i => i.FullName == typeof(IQuery).FullName || (i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>))))
+                        interfaces.Any(i => i.FullName == typeof(IInterceptor).FullName || 
+                                   i.FullName == typeof(IQuery).FullName || 
+                                   (i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>))))
                 {
                     // all dispatchers --> Reuse.InCurrentScope
                     IReuse reuse = assignedFromDispatcher
@@ -111,6 +119,17 @@ namespace queryExecutor
                         : Reuse.Transient;
 
                     registrator.RegisterMany(types, type, reuse);
+
+                    // interceptors
+                    if (type.IsClass)
+                    {
+                        InterceptedObjectAttribute attr = (InterceptedObjectAttribute)type.GetCustomAttribute(typeof(InterceptedObjectAttribute));
+                        if (attr != null)
+                        {
+                            Type serviceType = attr.ServiceInterfaceType ?? type.GetImplementedInterfaces().FirstOrDefault();
+                            registrator.Intercept(serviceType, attr.InterceptorType);
+                        }
+                    }
                 }
             });
 
@@ -119,7 +138,15 @@ namespace queryExecutor
                 reuse: Reuse.InWebRequest,
                 made: Made.Of(() => DbManagerFactory.CreateDbManager(Arg.Of<string>("ProviderName"), null), requestIgnored => string.Empty)
                 );
-           
+
+            // cache manager
+            CacheManagerConfiguration cacheConfig = new ConfigurationBuilder()
+                .WithSystemWebCacheHandle("webHandle")
+                .WithExpiration(ExpirationMode.Sliding, TimeSpan.FromSeconds(10))
+                .Build();
+
+            container.Register(reuse: Reuse.Singleton, made: Made.Of(() => CacheFactory.FromConfiguration<object>(cacheConfig)));
+
             container.UseInstance(container);
             #endregion
 

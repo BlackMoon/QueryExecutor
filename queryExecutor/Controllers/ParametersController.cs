@@ -34,7 +34,7 @@ namespace queryExecutor.Controllers
             };
 
             DscQParameterQueryResult result = _queryDispatcher.Dispatch<DscQParameterQuery, DscQParameterQueryResult>(parameterQuery);
-            return result.Items;
+            return result.Items.AsQueryable();
         }
 
         // GET: odata/Parameters(5)
@@ -51,7 +51,7 @@ namespace queryExecutor.Controllers
             };
 
             DscQParameterQueryResult result = _queryDispatcher.Dispatch<DscQParameterQuery, DscQParameterQueryResult>(parameterQuery);
-            return SingleResult.Create(result.Items.Where(p => p.No == key));
+            return SingleResult.Create(result.Items.Where(p => p.No == key).AsQueryable());
         }
     }
 }

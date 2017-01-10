@@ -1,4 +1,5 @@
 ﻿using queryExecutor.CQRS.Query;
+// ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace queryExecutor.Domain.DscQueryParameter.Query
 {
@@ -10,8 +11,11 @@ namespace queryExecutor.Domain.DscQueryParameter.Query
 
         public string UserId { get; set; }
 
-        public string Code { get; set; }
-
         public string Path { get; set; }
+
+        public override int GetHashCode()
+        {
+            return $"{DataSource}{UserId}{Password}{Path}".GetHashCode();
+        }
     }
 }
