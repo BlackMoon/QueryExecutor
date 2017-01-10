@@ -24,7 +24,7 @@ namespace queryExecutor.Domain.DscQueryData.Query
 
         public DscQDataQueryResult Execute(DscQDataQuery query)
         {
-            List<DscQData> dscQDatas = new List<DscQData>();
+            IEnumerable<DscQData> dscQDatas = Enumerable.Empty<DscQData>();
 
             try
             {
@@ -57,30 +57,33 @@ namespace queryExecutor.Domain.DscQueryData.Query
 
                     // проверка на наличие ключевого поля
                     bool keyFieldExists = dt.Columns.Contains(KeyField);
-                    int len = dt.Rows.Count;
 
                     string[] columnNames = dt.Columns.Cast<DataColumn>()
                         .Select(c => c.ColumnName)
                         .Where(c => !c.Equals(KeyField, StringComparison.OrdinalIgnoreCase))
                         .ToArray();
-                    
-                    dscQDatas.Capacity = len;
-                    for (int i = 0; i < len; i++)
-                    {
-                        DataRow row = dt.Rows[i];
 
-                        DscQData dscQData = new DscQData()
+                    dscQDatas = dt.AsEnumerable()
+                        .Select((r, i) =>
                         {
-                            No = keyFieldExists ? Convert.ToInt64(row[KeyField]) : i + 1
-                        };
+                            object v;
+                            DscQData dscQData = new DscQData() { No = i + 1 };
 
-                        foreach (string column in columnNames)
-                        {
-                            object v = row[column];
-                            dscQData.DynamicProperties[column] = (v != DBNull.Value) ? v : null;
-                        }
-                        dscQDatas.Add(dscQData);
-                    }
+                            if (keyFieldExists)
+                            {
+                                v = r[KeyField];
+                                if (v != DBNull.Value)
+                                    dscQData.No = Convert.ToInt64(v);
+                            }
+
+                            foreach (string column in columnNames)
+                            {
+                                v = r[column];
+                                dscQData.DynamicProperties[column] = (v != DBNull.Value) ? v : null;
+                            }
+
+                            return dscQData;
+                        });
                 }
             }
             catch (Exception ex)
