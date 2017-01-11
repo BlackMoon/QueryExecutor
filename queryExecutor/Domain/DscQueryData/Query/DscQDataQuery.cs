@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using queryExecutor.CQRS.Query;
 using queryExecutor.Domain.DscQueryParameter;
+// ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace queryExecutor.Domain.DscQueryData.Query
 {
@@ -12,10 +14,13 @@ namespace queryExecutor.Domain.DscQueryData.Query
 
         public string UserId { get; set; }
 
-        public string Code { get; set; }
-
         public string Path { get; set; }
 
         public List<DscQParameter> Parameters { get; set; }
+
+        public override int GetHashCode()
+        {
+            return $"{DataSource}{UserId}{Password}{Path}".GetHashCode() + Parameters.Sum(p => p.GetHashCode());
+        }
     }
 }

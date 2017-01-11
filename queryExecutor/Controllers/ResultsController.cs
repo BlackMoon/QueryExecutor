@@ -52,14 +52,16 @@ namespace queryExecutor.Controllers
                 Password = pswd,
                 Parameters = Request.GetQueryNameValuePairs()
                     .Where(p => !p.Key.StartsWith("$"))
-                    .Select(p => new DscQParameter()
+                    .Select((p, i) => new DscQParameter()
                     {
+                        // заполнение ключа [No] для вычисления хеша
+                        No = i + 1,
                         FieldCode = p.Key,
                         Value = p.Value,
                         // valueType из списка DscQParameter's
                         ValueType = parameterResult
                             .Items
-                            .FirstOrDefault(i => i.FieldCode.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
+                            .FirstOrDefault(item => item.FieldCode.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
                             ?.ValueType
                     })
                     .ToList()

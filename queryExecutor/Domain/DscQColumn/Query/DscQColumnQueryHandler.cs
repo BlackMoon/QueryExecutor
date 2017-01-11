@@ -2,9 +2,12 @@
 using System.Linq;
 using queryExecutor.CQRS.Query;
 using queryExecutor.DbManager;
+using queryExecutor.Interception;
+using queryExecutor.Interception.Attribute;
 
 namespace queryExecutor.Domain.DscQColumn.Query
 {
+    [InterceptedObject(InterceptorType = typeof(CacheInterceptor), ServiceInterfaceType = typeof(IQueryHandler<DscQColumnQuery, DscQColumnQueryResult>))]
     public class DscQColumnQueryHandler : IQueryHandler<DscQColumnQuery, DscQColumnQueryResult>
     {
         private readonly IDbManager _dbManager;

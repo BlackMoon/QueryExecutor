@@ -8,9 +8,12 @@ using queryExecutor.CQRS.Query;
 using queryExecutor.DbManager;
 using queryExecutor.DbManager.Oracle.Udt.TVariantNamed;
 using queryExecutor.DbManager.Oracle.Udt.TVariantNamedList;
+using queryExecutor.Interception;
+using queryExecutor.Interception.Attribute;
 
 namespace queryExecutor.Domain.DscQueryData.Query
 {
+    [InterceptedObject(InterceptorType = typeof(CacheInterceptor), ServiceInterfaceType = typeof(IQueryHandler<DscQDataQuery, DscQDataQueryResult>))]
     public class DscQDataQueryHandler : IQueryHandler<DscQDataQuery, DscQDataQueryResult>
     {
         private const string KeyField = "NO";
@@ -21,7 +24,7 @@ namespace queryExecutor.Domain.DscQueryData.Query
         {
             _dbManager = dbManager;
         }
-
+        
         public DscQDataQueryResult Execute(DscQDataQuery query)
         {
             IEnumerable<DscQData> dscQDatas = Enumerable.Empty<DscQData>();
@@ -37,27 +40,18 @@ namespace queryExecutor.Domain.DscQueryData.Query
                     switch (p.ValueType)
                     {
                         case EValueType.DATE:
-
-                            DateTime dtvalue;
-                            if (DateTime.TryParse(p.Value, out dtvalue))
-                                variantNamed.ValueDate = dtvalue;
-
+                            
+                            variantNamed.ValueDate = Convert.ToDateTime(p.Value);
                             break;
 
                         case EValueType.NUMBER:
-
-                            decimal dvalue;
-                            if (decimal.TryParse(p.Value, out dvalue))
-                                variantNamed.ValueNumber = dvalue;
-
+                            
+                            variantNamed.ValueNumber = Convert.ToDecimal(p.Value);
                             break;
 
                         case EValueType.OBJECT:
-
-                            long lvalue;
-                            if (long.TryParse(p.Value, out lvalue))
-                                variantNamed.ValueObject = lvalue;
-
+                            
+                            variantNamed.ValueObject = Convert.ToInt64(p.Value);
                             break;
 
                         default:
