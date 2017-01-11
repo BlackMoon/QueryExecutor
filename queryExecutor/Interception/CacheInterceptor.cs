@@ -18,12 +18,13 @@ namespace queryExecutor.Interception
         protected override void Proceed(IInvocation invocation)
         {
             string key = invocation.Method.Name + invocation.Arguments.Sum(a => a.GetHashCode());
+            string region = invocation.Method.DeclaringType?.FullName;
 
-            invocation.ReturnValue = _cacheManager.Get(key, invocation.Method.DeclaringType?.FullName);
+            invocation.ReturnValue = _cacheManager.Get(key, region);
             if (invocation.ReturnValue == null)
             {
                 base.Proceed(invocation);
-                _cacheManager.Add(key, invocation.ReturnValue, invocation.Method.DeclaringType?.FullName);
+                _cacheManager.Add(key, invocation.ReturnValue, region);
             }
         }
     }

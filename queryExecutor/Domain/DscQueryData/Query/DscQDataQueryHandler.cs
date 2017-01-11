@@ -29,10 +29,10 @@ namespace queryExecutor.Domain.DscQueryData.Query
         {
             IEnumerable<DscQData> dscQDatas = Enumerable.Empty<DscQData>();
 
-            try
+            using (_dbManager)
             {
                 _dbManager.Open($"Data Source={query.DataSource};User Id={query.UserId};Password={query.Password}");
-                
+
                 IEnumerable<TVariantNamed> variantNameds = query.Parameters.Select(p =>
                 {
                     TVariantNamed variantNamed = new TVariantNamed() { Name = p.FieldCode };
@@ -40,17 +40,17 @@ namespace queryExecutor.Domain.DscQueryData.Query
                     switch (p.ValueType)
                     {
                         case EValueType.DATE:
-                            
+
                             variantNamed.ValueDate = Convert.ToDateTime(p.Value);
                             break;
 
                         case EValueType.NUMBER:
-                            
+
                             variantNamed.ValueNumber = Convert.ToDecimal(p.Value);
                             break;
 
                         case EValueType.OBJECT:
-                            
+
                             variantNamed.ValueObject = Convert.ToInt64(p.Value);
                             break;
 
@@ -62,7 +62,7 @@ namespace queryExecutor.Domain.DscQueryData.Query
                     return variantNamed;
                 });
 
-                TVariantNamedList variantNamedList = TVariantNamedList.Create((OracleConnection) _dbManager.DbConnection, variantNameds.ToArray());
+                TVariantNamedList variantNamedList = TVariantNamedList.Create((OracleConnection)_dbManager.DbConnection, variantNameds.ToArray());
 
                 OracleParameter pParams = new OracleParameter("pParams", OracleDbType.Object, ParameterDirection.Input)
                 {
@@ -114,14 +114,6 @@ namespace queryExecutor.Domain.DscQueryData.Query
                             return dscQData;
                         });
                 }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(string.Join("\n", ex.Messages()));
-            }
-            finally
-            {
-                _dbManager.Close();
             }
 
             return new DscQDataQueryResult() { Items = dscQDatas.AsQueryable() };

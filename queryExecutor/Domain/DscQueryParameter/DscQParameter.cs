@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+// ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace queryExecutor.Domain.DscQueryParameter
 {
@@ -10,5 +11,10 @@ namespace queryExecutor.Domain.DscQueryParameter
     {
         [NotMapped]
         public string Value { get; set; }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode() + Value.GetHashCode();
+        }
     }
 }

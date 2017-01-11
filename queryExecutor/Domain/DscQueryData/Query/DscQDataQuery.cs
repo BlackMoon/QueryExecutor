@@ -20,7 +20,18 @@ namespace queryExecutor.Domain.DscQueryData.Query
 
         public override int GetHashCode()
         {
-            return $"{DataSource}{UserId}{Password}{Path}".GetHashCode() + Parameters.Sum(p => p.GetHashCode());
+            int sum = 0;
+
+            unchecked
+            {
+                // ReSharper disable once LoopCanBeConvertedToQuery
+                foreach (DscQParameter p in Parameters)
+                {
+                    sum += p.GetHashCode();
+                }
+            }
+
+            return $"{DataSource}{UserId}{Password}{Path}".GetHashCode() + sum;
         }
     }
 }

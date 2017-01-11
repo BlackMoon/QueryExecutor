@@ -1,0 +1,42 @@
+﻿@{
+    Layout = null;
+    string pre = @Request.Url.AbsoluteUri;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Запуск запросов</title>
+
+    <style>
+        body {
+            font-family: Calibri;
+        }
+    </style>
+
+</head>
+<body>
+    <h2>Запуск запросов @Html.Raw("v")@ViewBag.Version</h2>
+    <fieldset style="width:800px">
+        <legend><strong>OData URL</strong></legend>
+        <blockquote>
+            <strong>@pre@Html.Raw("[DataSource]/[QueryPath]/odata")</strong>
+        </blockquote>
+        где:
+        <blockquote>
+            [DataSource] - источник данных;
+            <br/>
+            [QueryPath] - путь к запросу;
+        </blockquote>
+        Пример:
+        <blockquote>
+            <strong>@pre@Html.Raw("aql.eco/Аварийные скважины/Скважины на которых были аварии/odata")</strong>
+        </blockquote>
+        Для получения данных необходима базовая авторизация (Authorization: Basic QWxhZGRpbjpPcGVuU2VzYW1l).
+    </fieldset>
+</body>
+</html>
+
+

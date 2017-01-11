@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Reflection;
+using System.Web.Mvc;
 
 namespace queryExecutor.Controllers
 {
@@ -7,7 +8,8 @@ namespace queryExecutor.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return Content("Home page");
+            ViewBag.Version = Assembly.GetExecutingAssembly().GetName().Version;
+            return View();
         }
     }
 }
