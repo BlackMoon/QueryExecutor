@@ -29,13 +29,13 @@ namespace queryExecutor.Domain.DscQueryData.Query
         {
             IEnumerable<DscQData> dscQDatas = Enumerable.Empty<DscQData>();
 
-            using (_dbManager)
+            try
             {
                 _dbManager.Open($"Data Source={query.DataSource};User Id={query.UserId};Password={query.Password}");
 
                 IEnumerable<TVariantNamed> variantNameds = query.Parameters.Select(p =>
                 {
-                    TVariantNamed variantNamed = new TVariantNamed() { Name = p.FieldCode };
+                    TVariantNamed variantNamed = new TVariantNamed() {Name = p.FieldCode};
 
                     switch (p.ValueType)
                     {
@@ -62,7 +62,8 @@ namespace queryExecutor.Domain.DscQueryData.Query
                     return variantNamed;
                 });
 
-                TVariantNamedList variantNamedList = TVariantNamedList.Create((OracleConnection)_dbManager.DbConnection, variantNameds.ToArray());
+                TVariantNamedList variantNamedList = TVariantNamedList.Create(
+                    (OracleConnection) _dbManager.DbConnection, variantNameds.ToArray());
 
                 OracleParameter pParams = new OracleParameter("pParams", OracleDbType.Object, ParameterDirection.Input)
                 {
@@ -72,10 +73,12 @@ namespace queryExecutor.Domain.DscQueryData.Query
                 _dbManager.AddParameter("pQuery_Path", query.Path, ParameterDirection.Input);
                 _dbManager.AddParameter(pParams);
 
-                OracleParameter pCursor = (OracleParameter)_dbManager.AddParameter("pCursor", null, ParameterDirection.Output);
+                OracleParameter pCursor =
+                    (OracleParameter) _dbManager.AddParameter("pCursor", null, ParameterDirection.Output);
                 pCursor.OracleDbType = OracleDbType.RefCursor;
 
-                IDbDataParameter pResult = _dbManager.AddParameter("result", null, ParameterDirection.ReturnValue, short.MaxValue);
+                IDbDataParameter pResult = _dbManager.AddParameter("result", null, ParameterDirection.ReturnValue,
+                    short.MaxValue);
                 _dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "DSC$UTILS.query_run");
 
                 long res = Convert.ToInt64(pResult.Value);
@@ -83,7 +86,7 @@ namespace queryExecutor.Domain.DscQueryData.Query
                 {
                     DataTable dt = new DataTable();
                     OracleDataAdapter adapter = new OracleDataAdapter();
-                    adapter.Fill(dt, (OracleRefCursor)pCursor.Value);
+                    adapter.Fill(dt, (OracleRefCursor) pCursor.Value);
 
                     // проверка на наличие ключевого поля
                     bool keyFieldExists = dt.Columns.Contains(KeyField);
@@ -96,7 +99,7 @@ namespace queryExecutor.Domain.DscQueryData.Query
                         .Select((r, i) =>
                         {
                             object v;
-                            DscQData dscQData = new DscQData() { No = i + 1 };
+                            DscQData dscQData = new DscQData() {No = i + 1};
 
                             if (keyFieldExists)
                             {
@@ -114,6 +117,10 @@ namespace queryExecutor.Domain.DscQueryData.Query
                             return dscQData;
                         });
                 }
+            }
+            finally
+            {
+                _dbManager.Dispose();
             }
 
             return new DscQDataQueryResult() { Items = dscQDatas.AsQueryable() };

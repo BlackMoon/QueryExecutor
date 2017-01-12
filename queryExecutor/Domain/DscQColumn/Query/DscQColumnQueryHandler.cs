@@ -33,13 +33,9 @@ namespace queryExecutor.Domain.DscQColumn.Query
                     .SqlQuery(sql, query.Path)
                     .AsQueryable();
             }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(string.Join("\n", ex.Messages()));
-            }
             finally
             {
-                _dbManager.Close();
+                _dbManager.Dispose();
             }
 
             return new DscQColumnQueryResult() { Items = dscQColumns };

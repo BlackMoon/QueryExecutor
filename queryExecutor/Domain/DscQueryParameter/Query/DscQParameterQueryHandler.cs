@@ -39,13 +39,9 @@ namespace queryExecutor.Domain.DscQueryParameter.Query
                     .SqlQuery(sql, query.Path)
                     .ToList();
             }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(string.Join("\n", ex.Messages()));
-            }
             finally
             {
-                _dbManager.Close();
+                _dbManager.Dispose();
             }
 
             return new DscQParameterQueryResult() { Items = dscQParameters };
