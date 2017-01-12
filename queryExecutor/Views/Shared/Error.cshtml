@@ -1,0 +1,20 @@
+﻿@model queryExecutor.Domain.ErrorMessage
+
+@{
+    var errorCode = Model.Code;
+    var errorDescription = Model.Description ?? "Произошла непредвиденная ошибка.";
+}
+
+<style>
+    .note-error {
+        color: #ee9393;
+    }
+</style>
+<h2>Ошибка</h2>
+@{
+    if (errorCode != 0)
+    {
+        <p class="note-error">@errorCode</p>
+    }
+}
+<p class="note-error">@errorDescription</p>

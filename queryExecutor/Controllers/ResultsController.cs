@@ -18,7 +18,7 @@ namespace queryExecutor.Controllers
     public class ResultsController : ODataController
     {
         private readonly IQueryDispatcher _queryDispatcher;
-
+        
         public ResultsController(IQueryDispatcher queryDispatcher)
         {
             _queryDispatcher = queryDispatcher;
@@ -26,7 +26,7 @@ namespace queryExecutor.Controllers
 
         [EnableQuery]
         // GET: odata/Data
-        public IEnumerable<DscQData> Get([FromODataUri] string datasource, [FromODataUri] string path)
+        public IQueryable<DscQData> Get([FromODataUri] string datasource, [FromODataUri] string path)
         {
             ClaimsPrincipal cp = (ClaimsPrincipal)User;
 
@@ -75,22 +75,8 @@ namespace queryExecutor.Controllers
         // GET: odata/Data(5)
         public SingleResult<DscQData> Get([FromODataUri] string datasource, [FromODataUri] string path, [FromODataUri] long key)
         {
-            ClaimsPrincipal cp = (ClaimsPrincipal)User;
-
-            DscQDataQuery dataQuery = new DscQDataQuery()
-            {
-                Path = path.Replace(DscQRouteHandler.RandomWord, "\\"),
-                DataSource = datasource,
-                UserId = cp.FindFirst(ClaimTypes.Name)?.Value,
-                Password = cp.FindFirst(BasicClaimTypes.Password)?.Value,
-                Parameters = Request.GetQueryNameValuePairs()
-                    .Where(p => !p.Key.StartsWith("$"))
-                    .Select(p => new DscQParameter() { FieldCode = p.Key, Value = p.Value })
-                    .ToList()
-            };
-
-            DscQDataQueryResult result = _queryDispatcher.Dispatch<DscQDataQuery, DscQDataQueryResult>(dataQuery);
-            return SingleResult.Create(result.Items);
+            IQueryable<DscQData> items = Get(datasource, path);
+            return SingleResult.Create(items.Where(i => i.No == key));
         }
     }
 }

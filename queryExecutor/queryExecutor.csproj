@@ -261,6 +261,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Domain\ErrorMessage.cs" />
     <Compile Include="Identity\BasicAuthenticationAttribute.cs" />
     <Compile Include="Controllers\ColumnsController.cs" />
     <Compile Include="Controllers\ResultsController.cs" />
@@ -318,6 +320,9 @@
     <None Include="Properties\PublishProfiles\pb.pubxml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
