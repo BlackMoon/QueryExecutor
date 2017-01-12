@@ -12,7 +12,7 @@ namespace queryExecutor
     {
         protected void Application_EndRequest()
         {
-            // 401: Unathorized
+            // 401: Unathorized (ASP.NET uses 401's internally to redirect users to the login page)
             if (Response.StatusCode == 401)
             {
                 Response.Clear();
