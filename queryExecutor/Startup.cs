@@ -139,12 +139,7 @@ namespace queryExecutor
                 );
 
             // cache manager
-            CacheManagerConfiguration cacheConfig = new ConfigurationBuilder()
-                .WithSystemWebCacheHandle("webHandle")
-                .WithExpiration(ExpirationMode.Sliding, TimeSpan.FromMinutes(3))
-                .Build();
-
-            container.Register(reuse: Reuse.Singleton, made: Made.Of(() => CacheFactory.FromConfiguration<object>(cacheConfig)));
+            container.Register(reuse: Reuse.Singleton, made: Made.Of(() => CacheFactory.FromConfiguration<object>("webCache")));
 
             container.UseInstance(container);
             #endregion
