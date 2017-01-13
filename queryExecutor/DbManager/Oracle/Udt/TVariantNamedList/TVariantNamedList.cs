@@ -15,7 +15,7 @@ namespace queryExecutor.DbManager.Oracle.Udt.TVariantNamedList
         private bool _isNull;
 
         [OracleObjectMapping("ITEMS")] 
-        public queryExecutor.DbManager.Oracle.Udt.TVariantNamed.TVariantNamed[] Items { get; private set; }
+        public TVariantNamed.TVariantNamed[] Items { get; private set; }
 
         public void FromCustomObject(OracleConnection con, IntPtr pUdt)
         {
@@ -24,13 +24,13 @@ namespace queryExecutor.DbManager.Oracle.Udt.TVariantNamedList
 
         public void ToCustomObject(OracleConnection con, IntPtr pUdt)
         {
-            Items = (queryExecutor.DbManager.Oracle.Udt.TVariantNamed.TVariantNamed[])OracleUdt.GetValue(con, pUdt, "ITEMS");
+            Items = (TVariantNamed.TVariantNamed[])OracleUdt.GetValue(con, pUdt, "ITEMS");
         }
 
         /// <summary>
         /// Устанавливает элемент по имени 
         /// </summary>
-        public void SetItem(ref TVariantNamedList self, queryExecutor.DbManager.Oracle.Udt.TVariantNamed.TVariantNamed item, OracleConnection con)
+        public void SetItem(ref TVariantNamedList self, TVariantNamed.TVariantNamed item, OracleConnection con)
         {
             using (OracleCommand cmd = new OracleCommand("T_VARIANT_NAMED_LIST.SET_ITEM", con))
             {
@@ -59,7 +59,7 @@ namespace queryExecutor.DbManager.Oracle.Udt.TVariantNamedList
         /// <summary>
         /// Устанавливает список элементов
         /// </summary>
-        public void SetItems(ref TVariantNamedList self, queryExecutor.DbManager.Oracle.Udt.TVariantNamed.TVariantNamed [] items, OracleConnection con)
+        public void SetItems(ref TVariantNamedList self, TVariantNamed.TVariantNamed [] items, OracleConnection con)
         {
             using (OracleCommand cmd = new OracleCommand("T_VARIANT_NAMED_LIST.SET_ITEMS", con))
             {
@@ -86,18 +86,12 @@ namespace queryExecutor.DbManager.Oracle.Udt.TVariantNamedList
             }        
         }
 
-        public bool IsNull 
-        {
-            get { return _isNull; }
-        }
+        public bool IsNull => _isNull;
 
         // TVariantNamed.Null is used to return a NULL TVariantNamed object
-        public static TVariantNamedList Null
-        {
-            get { return new TVariantNamedList { _isNull = true }; }
-        }
+        public static TVariantNamedList Null => new TVariantNamedList { _isNull = true };
 
-        public static TVariantNamedList Create(OracleConnection con, queryExecutor.DbManager.Oracle.Udt.TVariantNamed.TVariantNamed[] items)
+        public static TVariantNamedList Create(OracleConnection con, TVariantNamed.TVariantNamed[] items)
         {
             var obj = new TVariantNamedList();
             obj.SetItems(ref obj, items, con);

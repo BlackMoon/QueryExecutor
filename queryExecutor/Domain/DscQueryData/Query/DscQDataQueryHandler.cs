@@ -62,8 +62,7 @@ namespace queryExecutor.Domain.DscQueryData.Query
                     return variantNamed;
                 });
 
-                TVariantNamedList variantNamedList = TVariantNamedList.Create(
-                    (OracleConnection) _dbManager.DbConnection, variantNameds.ToArray());
+                TVariantNamedList variantNamedList = TVariantNamedList.Create((OracleConnection) _dbManager.DbConnection, variantNameds.ToArray());
 
                 OracleParameter pParams = new OracleParameter("pParams", OracleDbType.Object, ParameterDirection.Input)
                 {
@@ -76,8 +75,7 @@ namespace queryExecutor.Domain.DscQueryData.Query
                 OracleParameter pCursor = (OracleParameter) _dbManager.AddParameter("pCursor", null, ParameterDirection.Output);
                 pCursor.OracleDbType = OracleDbType.RefCursor;
 
-                IDbDataParameter pResult = _dbManager.AddParameter("result", null, ParameterDirection.ReturnValue,
-                    short.MaxValue);
+                IDbDataParameter pResult = _dbManager.AddParameter("result", null, ParameterDirection.ReturnValue, short.MaxValue);
                 _dbManager.ExecuteNonQuery(CommandType.StoredProcedure, "DSC$UTILS.query_run");
 
                 long res = Convert.ToInt64(pResult.Value);
