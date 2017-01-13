@@ -21,7 +21,7 @@ namespace queryExecutor.Interception
             string region = invocation.Method.DeclaringType?.FullName;
 
             invocation.ReturnValue = _cacheManager.Get(key, region);
-            if (invocation.ReturnValue == null)
+            //if (invocation.ReturnValue == null)
             {
                 base.Proceed(invocation);
                 _cacheManager.Add(key, invocation.ReturnValue, region);

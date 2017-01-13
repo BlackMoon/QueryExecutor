@@ -144,6 +144,9 @@ namespace queryExecutor
             container.UseInstance(container);
             #endregion
 
+            // exception filter
+            config.Filters.Add(new GlobalExceptionFilter());
+
             appBuilder.UseWebApi(config);
         }
 

@@ -73,8 +73,7 @@ namespace queryExecutor.Domain.DscQueryData.Query
                 _dbManager.AddParameter("pQuery_Path", query.Path, ParameterDirection.Input);
                 _dbManager.AddParameter(pParams);
 
-                OracleParameter pCursor =
-                    (OracleParameter) _dbManager.AddParameter("pCursor", null, ParameterDirection.Output);
+                OracleParameter pCursor = (OracleParameter) _dbManager.AddParameter("pCursor", null, ParameterDirection.Output);
                 pCursor.OracleDbType = OracleDbType.RefCursor;
 
                 IDbDataParameter pResult = _dbManager.AddParameter("result", null, ParameterDirection.ReturnValue,

@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using queryExecutor.Controllers;
 using queryExecutor.DbManager.Oracle;
+using Serilog;
 
 namespace queryExecutor
 {
@@ -38,6 +39,13 @@ namespace queryExecutor
 
         protected void Application_Start()
         {
+            // logger
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom
+                .AppSettings()
+                //.WriteTo.RollingFile(Server.MapPath(apa.Product.ToLower() + "-{Date}.log"), LogEventLevel.Warning)
+                .CreateLogger();
+
             OracleEnvironmentConfiguration config = (OracleEnvironmentConfiguration)ConfigurationManager.GetSection("oracleEnvironment");
         
             if (!string.IsNullOrEmpty(config.Nls_Lang))
@@ -51,7 +59,7 @@ namespace queryExecutor
 
             if (!string.IsNullOrEmpty(config.Tns_Admin))
                 Environment.SetEnvironmentVariable("TNS_ADMIN", config.Tns_Admin);
-
+            
             // default mvc route
             RouteTable.Routes.MapRoute(
                     name: "Default",
