@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -39,11 +41,12 @@ namespace queryExecutor
 
         protected void Application_Start()
         {
-            // logger
+            // BASEDIR вставляется в путь serilog:write-to:RollingFile.pathFormat
+            Environment.SetEnvironmentVariable("BASEDIR", AppDomain.CurrentDomain.BaseDirectory);       
+
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom
                 .AppSettings()
-                //.WriteTo.RollingFile(Server.MapPath(apa.Product.ToLower() + "-{Date}.log"), LogEventLevel.Warning)
                 .CreateLogger();
 
             OracleEnvironmentConfiguration config = (OracleEnvironmentConfiguration)ConfigurationManager.GetSection("oracleEnvironment");
