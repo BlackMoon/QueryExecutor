@@ -52,12 +52,6 @@ namespace queryExecutor
             if (!string.IsNullOrEmpty(config.Tns_Admin))
                 Environment.SetEnvironmentVariable("TNS_ADMIN", config.Tns_Admin);
 
-            RouteTable.Routes.MapRoute(
-                    name: "Error",
-                    url: "Error/{action}",
-                    defaults: new { controller = "Error" }
-                );
-
             // default mvc route
             RouteTable.Routes.MapRoute(
                     name: "Default",
