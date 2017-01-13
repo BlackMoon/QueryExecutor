@@ -26,6 +26,8 @@ namespace queryExecutor
 
                 IController c = new ErrorController();
                 c.Execute(new RequestContext(new HttpContextWrapper(Context), rd));
+                
+                Log.Logger.Warning(new UnauthorizedAccessException(Request.Url.AbsoluteUri), string.Empty);
             }
         }
 
@@ -34,6 +36,7 @@ namespace queryExecutor
             HttpException ex = Server.GetLastError() as HttpException;
 
             int statusCode = ex?.GetHttpCode() ?? 500;
+            Log.Logger.Error(ex, string.Empty);
 
             Server.ClearError();
             Server.TransferRequest($"/Error/{statusCode}");
@@ -58,7 +61,7 @@ namespace queryExecutor
                 Environment.SetEnvironmentVariable("ORACLE_HOME", config.Oracle_Home);
 
             if (!string.IsNullOrEmpty(config.Path))
-                Environment.SetEnvironmentVariable("PATH", config.Path + ";" + Environment.GetEnvironmentVariable("PATH"));
+                Environment.SetEnvironmentVariable("PATH", $"{config.Path};{Environment.GetEnvironmentVariable("PATH")}");
 
             if (!string.IsNullOrEmpty(config.Tns_Admin))
                 Environment.SetEnvironmentVariable("TNS_ADMIN", config.Tns_Admin);

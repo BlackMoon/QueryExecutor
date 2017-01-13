@@ -4,6 +4,9 @@ using System.Web.Http.Filters;
 
 namespace queryExecutor
 {
+    /// <summary>
+    /// Http (Api) exception filter
+    /// </summary>
     public class GlobalExceptionFilter : IExceptionFilter
     {
         public bool AllowMultiple => false;
