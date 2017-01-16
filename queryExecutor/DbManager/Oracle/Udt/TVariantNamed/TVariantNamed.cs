@@ -20,11 +20,13 @@ namespace queryExecutor.DbManager.Oracle.Udt.TVariantNamed
 
         public bool IsNull => _isNull;
 
-        [OracleObjectMapping("NAME")]
-        public string Name { get; set; }
+        public EValueType ValueType => (EValueType) ValueTypeNo;
 
         [OracleObjectMapping("VALUE_TYPE_NO")]
         public long ValueTypeNo { get; private set; }
+
+        [OracleObjectMapping("NAME")]
+        public string Name { get; set; }
 
         [OracleObjectMapping("VALUE_DATE")]
         public DateTime? ValueDate
@@ -86,10 +88,25 @@ namespace queryExecutor.DbManager.Oracle.Udt.TVariantNamed
         {
             OracleUdt.SetValue(con, pUdt, "NAME", Name);
             OracleUdt.SetValue(con, pUdt, "VALUE_TYPE_NO", ValueTypeNo);
-            OracleUdt.SetValue(con, pUdt, "VALUE_DATE", ValueDate);
-            OracleUdt.SetValue(con, pUdt, "VALUE_NUMBER", ValueNumber);
-            OracleUdt.SetValue(con, pUdt, "VALUE_OBJECT_NO", ValueObject);
-            OracleUdt.SetValue(con, pUdt, "VALUE_VARCHAR2", ValueVarchar2);
+
+            switch ((EValueType)ValueTypeNo)
+            {
+                case EValueType.DATE:
+                    OracleUdt.SetValue(con, pUdt, "VALUE_DATE", ValueDate);
+                    break;
+                
+                case EValueType.NUMBER:
+                    OracleUdt.SetValue(con, pUdt, "VALUE_NUMBER", ValueNumber);
+                    break;
+                
+                case EValueType.OBJECT:
+                    OracleUdt.SetValue(con, pUdt, "VALUE_OBJECT_NO", ValueObject);
+                    break;
+
+                case EValueType.VARCHAR:
+                    OracleUdt.SetValue(con, pUdt, "VALUE_VARCHAR2", ValueVarchar2);
+                    break;
+            }
         }
 
         public void ToCustomObject(OracleConnection con, IntPtr pUdt)
@@ -97,17 +114,36 @@ namespace queryExecutor.DbManager.Oracle.Udt.TVariantNamed
             Name = (string)OracleUdt.GetValue(con, pUdt, "NAME");
             ValueTypeNo = (long)OracleUdt.GetValue(con, pUdt, "VALUE_TYPE_NO");
 
-            if (!OracleUdt.IsDBNull(con, pUdt, "VALUE_DATE"))
-                ValueDate = (DateTime)OracleUdt.GetValue(con, pUdt, "VALUE_DATE");
+            switch ((EValueType)ValueTypeNo)
+            {
+                case EValueType.DATE:
 
-            if (!OracleUdt.IsDBNull(con, pUdt, "VALUE_NUMBER"))
-                ValueNumber = (decimal?)OracleUdt.GetValue(con, pUdt, "VALUE_NUMBER");
+                    if (!OracleUdt.IsDBNull(con, pUdt, "VALUE_DATE"))
+                        ValueDate = (DateTime)OracleUdt.GetValue(con, pUdt, "VALUE_DATE");
 
-            if (!OracleUdt.IsDBNull(con, pUdt, "VALUE_OBJECT_NO"))
-                ValueObject = (long?)OracleUdt.GetValue(con, pUdt, "VALUE_OBJECT_NO");
+                    break;
+                
+                case EValueType.NUMBER:
 
-            if (!OracleUdt.IsDBNull(con, pUdt, "VALUE_VARCHAR2"))
-                ValueVarchar2 = (string)OracleUdt.GetValue(con, pUdt, "VALUE_VARCHAR2");
+                    if (!OracleUdt.IsDBNull(con, pUdt, "VALUE_NUMBER"))
+                        ValueNumber = (decimal)OracleUdt.GetValue(con, pUdt, "VALUE_NUMBER");
+
+                    break;
+
+                case EValueType.OBJECT:
+
+                    if (!OracleUdt.IsDBNull(con, pUdt, "VALUE_OBJECT_NO"))
+                        ValueObject = (long)OracleUdt.GetValue(con, pUdt, "VALUE_OBJECT_NO");
+
+                    break;
+
+                case EValueType.VARCHAR:
+
+                    if (!OracleUdt.IsDBNull(con, pUdt, "VALUE_VARCHAR2"))
+                        ValueVarchar2 = (string)OracleUdt.GetValue(con, pUdt, "VALUE_VARCHAR2");
+
+                    break;
+            }
         }
 
         // TVariantNamed.Null is used to return a NULL TVariantNamed object

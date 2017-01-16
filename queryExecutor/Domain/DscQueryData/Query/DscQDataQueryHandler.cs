@@ -13,7 +13,7 @@ using queryExecutor.Interception.Attribute;
 
 namespace queryExecutor.Domain.DscQueryData.Query
 {
-    [InterceptedObject(InterceptorType = typeof(CacheInterceptor), ServiceInterfaceType = typeof(IQueryHandler<DscQDataQuery, DscQDataQueryResult>))]
+    //[InterceptedObject(InterceptorType = typeof(CacheInterceptor), ServiceInterfaceType = typeof(IQueryHandler<DscQDataQuery, DscQDataQueryResult>))]
     public class DscQDataQueryHandler : IQueryHandler<DscQDataQuery, DscQDataQueryResult>
     {
         private const string KeyField = "NO";
