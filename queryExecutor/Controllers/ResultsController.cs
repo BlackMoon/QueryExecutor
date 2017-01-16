@@ -36,7 +36,7 @@ namespace queryExecutor.Controllers
             // DscQParameters (из кеша)
             DscQParameterQuery parameterQuery = new DscQParameterQuery()
             {
-                Path = path.Replace(DscQRouteHandler.RandomWord, "\\"),
+                Path = path.Replace(MvcApplication.RandomWord, "\\"),
                 DataSource = datasource,
                 UserId = user,
                 Password = pswd
@@ -46,7 +46,7 @@ namespace queryExecutor.Controllers
 
             DscQDataQuery dataQuery = new DscQDataQuery()
             {
-                Path = path.Replace(DscQRouteHandler.RandomWord, "\\"),
+                Path = path.Replace(MvcApplication.RandomWord, "\\"),
                 DataSource = datasource,
                 UserId = user,
                 Password = pswd,

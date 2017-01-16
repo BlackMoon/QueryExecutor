@@ -27,7 +27,7 @@ namespace queryExecutor.Controllers
 
             DscQParameterQuery parameterQuery = new DscQParameterQuery()
             {
-                Path = path.Replace(DscQRouteHandler.RandomWord, "\\"),
+                Path = path.Replace(MvcApplication.RandomWord, "\\"),
                 DataSource = datasource,
                 UserId = cp.FindFirst(ClaimTypes.Name)?.Value,
                 Password = cp.FindFirst(BasicClaimTypes.Password)?.Value
@@ -45,7 +45,7 @@ namespace queryExecutor.Controllers
 
             DscQParameterQuery parameterQuery = new DscQParameterQuery()
             {
-                Path = path.Replace(DscQRouteHandler.RandomWord, "\\"),
+                Path = path.Replace(MvcApplication.RandomWord, "\\"),
                 DataSource = datasource,
                 UserId = cp.FindFirst(ClaimTypes.Name)?.Value,
                 Password = cp.FindFirst(BasicClaimTypes.Password)?.Value

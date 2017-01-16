@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
-using System.Text.RegularExpressions;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.OData.Builder;
@@ -28,61 +24,10 @@ using queryExecutor.Interception.Attribute;
 
 namespace queryExecutor
 {
-
-    /// <summary>
-    /// MessageHandler для DscQRoute
-    /// <para>Заменяет / в сегменте {path} в odata-url вида {datasource}/{path}/odata. </para>
-    /// </summary>
-    public class DscQRouteHandler : DelegatingHandler
-    {
-        private const int WordLength = 3;
-        private const string Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789~!";
-
-        private static string _randomWord;
-
-        public static string RandomWord
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_randomWord))
-                {
-                    Random rnd = new Random();
-                    _randomWord = new string(Enumerable.Repeat(Chars, WordLength).Select(s => s[rnd.Next(s.Length)]).ToArray());
-                }
-
-                return _randomWord;
-            }
-        }
-
-        protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-        {
-            string uri = request.RequestUri.LocalPath;
-
-            Regex rgx = new Regex("^/[\\w.-]+/(.+)/odata");
-            Match matches = rgx.Match(uri);
-
-            if (matches.Length > 0)
-            {
-                foreach (Match m in rgx.Matches(uri))
-                {
-                    if (m.Groups.Count > 1)
-                    {
-                        string oldValue = m.Groups[1].Value,
-                            newValue = oldValue.Replace("/", RandomWord);
-
-                        uri = uri.Replace(oldValue, newValue);
-                    }
-                }
-
-                request.RequestUri = new Uri($"{request.RequestUri.Scheme}://{request.RequestUri.Host}:{request.RequestUri.Port}{uri}{request.RequestUri.Query}");
-            }
-
-            return base.SendAsync(request, cancellationToken);
-        }
-    }
-
     public class Startup
     {
+        public static IContainer Container;
+
         public void Configuration(IAppBuilder appBuilder)
         {
             // Set up server configuration
@@ -91,19 +36,16 @@ namespace queryExecutor
             // prevent [The query specified in the URI is not valid] message
             if (HttpContext.Current.Request.IsLocal)
                 config.Count().Filter().OrderBy().Expand().Select().MaxTop(null);
-
-            // DscQRouteHandler
-            config.MessageHandlers.Add(new DscQRouteHandler());
-
+            
             config.MapODataServiceRoute(
                 routeName: "DscQuery", 
                 routePrefix: "{datasource}/{path}/odata", 
                 model: GetQueryEdmModel());
                 
             #region DI
-            IContainer container = new Container(rules => rules.WithoutThrowOnRegisteringDisposableTransient()).WithWebApi(config);
+            Container = new Container(rules => rules.WithoutThrowOnRegisteringDisposableTransient()).WithWebApi(config);
             
-            container.RegisterMany(new [] { GetType().Assembly }, (registrator, types, type) =>
+            Container.RegisterMany(new [] { GetType().Assembly }, (registrator, types, type) =>
             {
                 Type[] interfaces = type.GetInterfaces();
 
@@ -115,7 +57,7 @@ namespace queryExecutor
                 {
                     // all dispatchers --> Reuse.InCurrentScope
                     IReuse reuse = assignedFromDispatcher
-                        ? Reuse.InCurrentScope
+                        ? Reuse.InResolutionScope
                         : Reuse.Transient;
 
                     registrator.RegisterMany(types, type, reuse);
@@ -133,16 +75,16 @@ namespace queryExecutor
                 }
             });
 
-            container.RegisterInstance(System.Configuration.ConfigurationManager.AppSettings["ProviderName"], serviceKey: "ProviderName");
-            container.Register(
-                reuse: Reuse.InWebRequest,
+            Container.RegisterInstance(System.Configuration.ConfigurationManager.AppSettings["ProviderName"], serviceKey: "ProviderName");
+            Container.Register(
+                reuse: Reuse.InResolutionScope,
                 made: Made.Of(() => DbManagerFactory.CreateDbManager(Arg.Of<string>("ProviderName"), null), requestIgnored => string.Empty)
                 );
 
             // cache manager
-            container.Register(reuse: Reuse.Singleton, made: Made.Of(() => CacheFactory.FromConfiguration<object>("webCache")));
+            Container.Register(reuse: Reuse.Singleton, made: Made.Of(() => CacheFactory.FromConfiguration<object>("webCache")));
 
-            container.UseInstance(container);
+            Container.UseInstance(Container);
             #endregion
             
             config.Filters.Add(new GlobalExceptionFilter());

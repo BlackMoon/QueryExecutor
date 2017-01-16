@@ -29,7 +29,7 @@ namespace queryExecutor.Controllers
 
             DscQColumnQuery columnQuery = new DscQColumnQuery()
             {
-                Path = path.Replace(DscQRouteHandler.RandomWord, "\\"),
+                Path = path.Replace(MvcApplication.RandomWord, "\\"),
                 DataSource = datasource,
                 UserId = cp.FindFirst(ClaimTypes.Name)?.Value,
                 Password = cp.FindFirst(BasicClaimTypes.Password)?.Value
@@ -47,7 +47,7 @@ namespace queryExecutor.Controllers
 
             DscQColumnQuery columnQuery = new DscQColumnQuery()
             {
-                Path = path.Replace(DscQRouteHandler.RandomWord, "\\"),
+                Path = path.Replace(MvcApplication.RandomWord, "\\"),
                 DataSource = datasource,
                 UserId = cp.FindFirst(ClaimTypes.Name)?.Value,
                 Password = cp.FindFirst(BasicClaimTypes.Password)?.Value
