@@ -28,6 +28,7 @@ using queryExecutor.Interception.Attribute;
 
 namespace queryExecutor
 {
+
     /// <summary>
     /// MessageHandler для DscQRoute
     /// <para>Заменяет / в сегменте {path} в odata-url вида {datasource}/{path}/odata. </para>
@@ -143,9 +144,9 @@ namespace queryExecutor
 
             container.UseInstance(container);
             #endregion
-
-            // exception filter
+            
             config.Filters.Add(new GlobalExceptionFilter());
+            //config.Formatters.Insert(0, new NullSerializerProvider());
 
             appBuilder.UseWebApi(config);
         }
