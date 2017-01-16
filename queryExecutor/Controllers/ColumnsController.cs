@@ -40,6 +40,7 @@ namespace queryExecutor.Controllers
         }
 
         // GET: odata/Columns(5)
+        [EnableQuery]
         public SingleResult<DscQColumn> Get([FromODataUri] string datasource, [FromODataUri] string path, [FromODataUri] long key)
         {
             ClaimsPrincipal cp = (ClaimsPrincipal)User;

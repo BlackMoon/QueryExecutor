@@ -8,12 +8,12 @@ using queryExecutor.CQRS.Query;
 using queryExecutor.DbManager;
 using queryExecutor.DbManager.Oracle.Udt.TVariantNamed;
 using queryExecutor.DbManager.Oracle.Udt.TVariantNamedList;
-using queryExecutor.Interception;
-using queryExecutor.Interception.Attribute;
 
 namespace queryExecutor.Domain.DscQueryData.Query
 {
-    //[InterceptedObject(InterceptorType = typeof(CacheInterceptor), ServiceInterfaceType = typeof(IQueryHandler<DscQDataQuery, DscQDataQueryResult>))]
+#if !DEBUG
+    [Interception.Attribute.InterceptedObject(InterceptorType = typeof(Interception.CacheInterceptor), ServiceInterfaceType = typeof(IQueryHandler<DscQDataQuery, DscQDataQueryResult>))]
+#endif
     public class DscQDataQueryHandler : IQueryHandler<DscQDataQuery, DscQDataQueryResult>
     {
         private const string KeyField = "NO";

@@ -146,8 +146,6 @@ namespace queryExecutor
             #endregion
             
             config.Filters.Add(new GlobalExceptionFilter());
-            //config.Formatters.Insert(0, new NullSerializerProvider());
-
             appBuilder.UseWebApi(config);
         }
 

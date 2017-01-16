@@ -1,13 +1,12 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using queryExecutor.CQRS.Query;
 using queryExecutor.DbManager;
-using queryExecutor.Interception;
-using queryExecutor.Interception.Attribute;
 
 namespace queryExecutor.Domain.DscQColumn.Query
 {
-    [InterceptedObject(InterceptorType = typeof(CacheInterceptor), ServiceInterfaceType = typeof(IQueryHandler<DscQColumnQuery, DscQColumnQueryResult>))]
+#if !DEBUG
+    [Interception.Attribute.InterceptedObject(InterceptorType = typeof(Interception.CacheInterceptor), ServiceInterfaceType = typeof(IQueryHandler<DscQColumnQuery, DscQColumnQueryResult>))]
+#endif
     public class DscQColumnQueryHandler : IQueryHandler<DscQColumnQuery, DscQColumnQueryResult>
     {
         private readonly IDbManager _dbManager;
@@ -19,7 +18,7 @@ namespace queryExecutor.Domain.DscQColumn.Query
 
         public DscQColumnQueryResult Execute(DscQColumnQuery query)
         {
-            IQueryable<DscQColumn> dscQColumns = null;
+            IQueryable<DscQColumn> dscQColumns;
             try
             {
                 string sql = @"SELECT c.no, c.name, c.field_Code fieldCode, c.value_type_no valueType FROM DSC$QUERY_COLUMNS c

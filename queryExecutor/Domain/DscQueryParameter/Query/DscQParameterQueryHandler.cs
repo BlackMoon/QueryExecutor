@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using queryExecutor.CQRS.Query;
 using queryExecutor.DbManager;
-using queryExecutor.Interception;
-using queryExecutor.Interception.Attribute;
 
 namespace queryExecutor.Domain.DscQueryParameter.Query
 {
-    [InterceptedObject(InterceptorType = typeof(CacheInterceptor), ServiceInterfaceType = typeof(IQueryHandler<DscQParameterQuery, DscQParameterQueryResult>))]
+#if !DEBUG
+    [Interception.Attribute.InterceptedObject(InterceptorType = typeof(Interception.CacheInterceptor), ServiceInterfaceType = typeof(IQueryHandler<DscQParameterQuery, DscQParameterQueryResult>))]
+#endif
     public class DscQParameterQueryHandler : IQueryHandler<DscQParameterQuery, DscQParameterQueryResult>
     {
         private readonly IDbManager _dbManager;
