@@ -21,7 +21,7 @@ namespace queryExecutor.Domain.DscQColumn.Query
             IQueryable<DscQColumn> dscQColumns;
             try
             {
-                string sql = @"SELECT c.no, c.name, c.field_Code fieldCode, c.value_type_no valueType FROM DSC$QUERY_COLUMNS c
+                string sql = @"SELECT c.no, c.name, c.field_Code fieldCode, c.scale, c.precision, c.value_type_no valueType FROM DSC$QUERY_COLUMNS c
                                WHERE c.query_no = dsc$utils.query_find(:p0)
                                ORDER BY c.order_no";
 

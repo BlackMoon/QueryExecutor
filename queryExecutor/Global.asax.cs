@@ -37,13 +37,13 @@ namespace queryExecutor
         }
 
         /// <summary>
-        /// Заменяет / в сегменте {path} в url вида {datasource}/{path}/(odata|utils.svc).
+        /// Заменяет / в сегменте {path} в url вида {datasource}/{path}/odata.
         /// </summary>
         protected void Application_BeginRequest()
         {
             string uri = Request.Path;
 
-            Regex rgx = new Regex("^/[\\w.-]+/(.+)/(odata|utils.svc)", RegexOptions.IgnoreCase | RegexOptions.Compiled);
+            Regex rgx = new Regex("^/[\\w.-]+/(.+)/odata", RegexOptions.IgnoreCase | RegexOptions.Compiled);
             Match match = rgx.Match(uri);
 
             if (match.Success)
@@ -117,7 +117,7 @@ namespace queryExecutor
                 Environment.SetEnvironmentVariable("TNS_ADMIN", config.Tns_Admin);
 
             // svc route
-            RouteTable.Routes.Add(new DynamicServiceRoute("{datasource}/{path}/utils.svc", null, new DiServiceHostFactory(), typeof(Utils)));
+            RouteTable.Routes.Add(new ServiceRoute("soap/utils.svc", new DiServiceHostFactory(), typeof(Utils)));
                 
             // default mvc route
             RouteTable.Routes.MapRoute(

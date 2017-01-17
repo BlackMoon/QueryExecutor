@@ -1,20 +1,24 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using System.ServiceModel;
 using queryExecutor.Domain.DscQColumn;
+using queryExecutor.Domain.DscQColumn.Query;
+using queryExecutor.Domain.DscQueryData;
+using queryExecutor.Domain.DscQueryData.Query;
+using queryExecutor.Domain.DscQueryParameter;
+using queryExecutor.Domain.DscQueryParameter.Query;
 
 namespace queryExecutor.Service.Utils
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the interface name "IUtils" in both code and config file together.
-    [ServiceContract]
+    [ServiceContract(Namespace = "http://web.aquilon.ru")]
     public interface IUtils
     {
         [OperationContract]
-        IQueryable<DscQColumn> GetColumns();
+        IEnumerable<DscQColumn> GetColumns(DscQColumnQuery query);
 
         [OperationContract]
-        void GetParameters();
+        IEnumerable<DscQParameter> GetParameters(DscQParameterQuery query);
 
         [OperationContract]
-        void GetResults();
+        IEnumerable<DscQData> GetResults(DscQDataQuery query);
     }
 }

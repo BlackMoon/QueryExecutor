@@ -1,14 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using queryExecutor.CQRS.Query;
 using queryExecutor.Domain.DscQColumn;
 using queryExecutor.Domain.DscQColumn.Query;
+using queryExecutor.Domain.DscQueryData;
+using queryExecutor.Domain.DscQueryData.Query;
+using queryExecutor.Domain.DscQueryParameter;
+using queryExecutor.Domain.DscQueryParameter.Query;
 
 namespace queryExecutor.Service.Utils
 {
-    // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Utils" in code, svc and config file together.
-    // NOTE: In order to launch WCF Test Client for testing this service, please select Utils.svc or Utils.svc.cs at the Solution Explorer and start debugging.
+    [ServiceBehavior(Namespace = "http://web.aquilon.ru")]
     public class Utils : IUtils
     {
         private readonly IQueryDispatcher _queryDispatcher;
@@ -17,30 +21,52 @@ namespace queryExecutor.Service.Utils
             _queryDispatcher = queryDispatcher;
         }
 
-        public IQueryable<DscQColumn> GetColumns()
+        public IEnumerable<DscQColumn> GetColumns(DscQColumnQuery query)
         {
-            
+            query.UserId = OperationContext.Current.ServiceSecurityContext.PrimaryIdentity.Name;
 
-            DscQColumnQuery columnQuery = new DscQColumnQuery()
-            {
-                Path = "Аварийные скважины/Скважины на которых были аварии",
-                DataSource = "aql.eco",
-                UserId = "ECO",
-                Password = "ECO"
-            };
-
-            DscQColumnQueryResult result = _queryDispatcher.Dispatch<DscQColumnQuery, DscQColumnQueryResult>(columnQuery);
+            DscQColumnQueryResult result = _queryDispatcher.Dispatch<DscQColumnQuery, DscQColumnQueryResult>(query);
             return result.Items;
         }
 
-        public void GetParameters()
+        public IEnumerable<DscQParameter> GetParameters(DscQParameterQuery query)
         {
-            throw new NotImplementedException();
+            DscQParameterQueryResult result = _queryDispatcher.Dispatch<DscQParameterQuery, DscQParameterQueryResult>(query);
+            return result.Items;
         }
 
-        public void GetResults()
+        public IEnumerable<DscQData> GetResults(DscQDataQuery query)
         {
-            throw new NotImplementedException();
+            // DscQParameters (из кеша)
+            DscQParameterQuery parameterQuery = new DscQParameterQuery()
+            {
+                Path = query.Path,
+                DataSource = query.DataSource,
+                //UserId = user,
+                //Password = pswd
+            };
+
+            DscQParameterQueryResult parameterResult = _queryDispatcher.Dispatch<DscQParameterQuery, DscQParameterQueryResult>(parameterQuery);
+
+                //UserId = user,
+                //Password = pswd,
+            query.Parameters = query.Parameters2
+                .Select((p, i) => new DscQParameter()
+                {
+                    // заполнение ключа [No] для вычисления хеша
+                    No = i + 1,
+                    FieldCode = p.FieldCode,
+                    Value = p.Value,
+                    // valueType из списка DscQParameter's
+                    ValueType = parameterResult
+                        .Items
+                        .FirstOrDefault(item => item.FieldCode.Equals(p.FieldCode, StringComparison.OrdinalIgnoreCase))
+                        ?.ValueType
+                }).ToList();
+                    
+
+            DscQDataQueryResult result = _queryDispatcher.Dispatch<DscQDataQuery, DscQDataQueryResult>(query);
+            return result.Items;
         }
     }
 }

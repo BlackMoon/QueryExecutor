@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace queryExecutor.Domain.DscQColumn
@@ -8,24 +9,21 @@ namespace queryExecutor.Domain.DscQColumn
     /// dsc$query_columns
     /// </summary>
     [Table("DSC$QUERY_COLUMNS")]
-    public class DscQColumn
+    public class DscQColumn : KeyObject
     {
-        [Key]
-        [Column("NO")]
-        public long No { get; set; }
-
         [Column("NAME")]
         public string Name { get; set; }
 
         [Column("FIELD_CODE")]
         public string FieldCode { get; set; }
-        
+
+        [Column("PRECISION")]
+        public int Precision { get; set; }
+
+        [Column("SCALE")]
+        public int Scale { get; set; }
+
         [Column("VALUE_TYPE_NO")]
         public EValueType? ValueType { get; set; }
-
-        public override int GetHashCode()
-        {
-            return (int)No;
-        }
     }
 }
