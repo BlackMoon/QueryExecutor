@@ -13,12 +13,12 @@ namespace queryExecutor.Service.Utils
     public interface IUtils
     {
         [OperationContract]
-        IEnumerable<DscQColumn> GetColumns(DscQColumnQuery query);
+        DscQColumn[] GetColumns(DscQColumnQuery query);
 
         [OperationContract]
-        IEnumerable<DscQParameter> GetParameters(DscQParameterQuery query);
+        DscQParameter[] GetParameters(DscQParameterQuery query);
 
         [OperationContract]
-        IEnumerable<DscQData> GetResults(DscQDataQuery query);
+        DscQData[] GetResults(DscQDataQuery query);
     }
 }

@@ -9,7 +9,6 @@ using System.Web.Routing;
 using queryExecutor.Controllers;
 using queryExecutor.DbManager.Oracle;
 using queryExecutor.Service;
-using queryExecutor.Service.Factory;
 using queryExecutor.Service.Utils;
 using Serilog;
 
@@ -117,7 +116,7 @@ namespace queryExecutor
                 Environment.SetEnvironmentVariable("TNS_ADMIN", config.Tns_Admin);
 
             // svc route
-            RouteTable.Routes.Add(new ServiceRoute("soap/utils.svc", new DiServiceHostFactory(), typeof(Utils)));
+            RouteTable.Routes.Add(new ServiceRoute("soap/utils.svc", new BehaviorFactory(), typeof(Utils)));
                 
             // default mvc route
             RouteTable.Routes.MapRoute(

@@ -3,15 +3,18 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using DryIoc;
 
-namespace queryExecutor.Service.Factory
+namespace queryExecutor.Service
 {
-    public class DiServiceHostFactory : ServiceHostFactory
+    /// <summary>
+    /// Фабрика сервисов
+    /// </summary>
+    public class BehaviorFactory : ServiceHostFactory
     {
         /// <summary>
-        /// Creates a <see cref="DiServiceHost"/> for a specified type of service with a specific base address. 
+        /// Creates a <see cref="BehaviorHost"/> for a specified type of service with a specific base address. 
         /// </summary>
         /// <returns>
-        /// A <see cref="DiServiceHost"/> for the type of service specified with a specific base address.
+        /// A <see cref="BehaviorHost"/> for the type of service specified with a specific base address.
         /// </returns>
         /// <param name="serviceType">
         /// Specifies the type of service to host. 
@@ -24,7 +27,7 @@ namespace queryExecutor.Service.Factory
             //Register the service as a type so it can be found from the instance provider
             Startup.Container.Register(serviceType);
          
-            return new DiServiceHost(serviceType, baseAddresses);
+            return new BehaviorHost(serviceType, baseAddresses);
         }
     }
 }

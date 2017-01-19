@@ -1,16 +1,21 @@
 ﻿using System;
 using System.ServiceModel;
+using queryExecutor.Service.DI;
+using queryExecutor.Service.Logger;
 
-namespace queryExecutor.Service.Factory
+namespace queryExecutor.Service
 {
-    public class DiServiceHost : ServiceHost
+    /// <summary>
+    /// Доп. поведения
+    /// </summary>
+    public class BehaviorHost : ServiceHost
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="DiServiceHost"/> class.
+        /// Initializes a new instance of the <see cref="BehaviorHost"/> class.
         /// </summary>
         /// <param name="serviceType">Type of the service.</param>
         /// <param name="baseAddresses">The base addresses.</param>
-        public DiServiceHost(Type serviceType, Uri[] baseAddresses) : base(serviceType, baseAddresses)
+        public BehaviorHost(Type serviceType, Uri[] baseAddresses) : base(serviceType, baseAddresses)
         {
             
         }
@@ -22,6 +27,7 @@ namespace queryExecutor.Service.Factory
         protected override void OnOpen(TimeSpan timeout)
         {
             Description.Behaviors.Add(new DiServiceBehavior());
+            Description.Behaviors.Add(new LogErrorBehavior());
             base.OnOpen(timeout);
         }
     }

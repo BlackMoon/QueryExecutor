@@ -22,7 +22,7 @@ namespace queryExecutor.Domain.DscQueryData.Query
         public List<DscQParameter> Parameters { get; set; }
 
         [DataMember]
-        public List<DscQParameter2> Parameters2 { get; set; }
+        public Dictionary<string, object> DynamicParameters { get; set; }
 
         public override int GetHashCode()
         {

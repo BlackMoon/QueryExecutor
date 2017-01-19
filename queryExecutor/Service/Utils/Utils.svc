@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="queryExecutor.Service.Utils.Utils" CodeBehind="Utils.svc.cs" Factory="queryExecutor.Service.Factory.DiServiceHostFactory" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="queryExecutor.Service.Utils.Utils" CodeBehind="Utils.svc.cs" Factory="queryExecutor.Service.BehaviorFactory" %>

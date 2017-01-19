@@ -3,7 +3,7 @@ using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Dispatcher;
 
-namespace queryExecutor.Service.Factory
+namespace queryExecutor.Service.DI
 {
     /// <summary>
     /// A custom instance provider that uses the ServiceLocator from MS Pattern and Practices to resolve service types.

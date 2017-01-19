@@ -33,34 +33,38 @@ namespace queryExecutor.Domain.DscQueryData.Query
             {
                 _dbManager.Open($"Data Source={query.DataSource};User Id={query.UserId};Password={query.Password}");
 
-                IEnumerable<TVariantNamed> variantNameds = query.Parameters.Select(p =>
+                IEnumerable<TVariantNamed> variantNameds = Enumerable.Empty<TVariantNamed>();
+                if (query.Parameters != null)
                 {
-                    TVariantNamed variantNamed = new TVariantNamed() {Name = p.FieldCode};
-
-                    switch (p.ValueType)
+                    variantNameds = query.Parameters.Select(p =>
                     {
-                        case EValueType.DATE:
+                        TVariantNamed variantNamed = new TVariantNamed() {Name = p.FieldCode};
 
-                            variantNamed.ValueDate = Convert.ToDateTime(p.Value);
-                            break;
+                        switch (p.ValueType)
+                        {
+                            case EValueType.DATE:
 
-                        case EValueType.NUMBER:
+                                variantNamed.ValueDate = Convert.ToDateTime(p.Value);
+                                break;
 
-                            variantNamed.ValueNumber = Convert.ToDecimal(p.Value);
-                            break;
+                            case EValueType.NUMBER:
 
-                        case EValueType.OBJECT:
+                                variantNamed.ValueNumber = Convert.ToDecimal(p.Value);
+                                break;
 
-                            variantNamed.ValueObject = Convert.ToInt64(p.Value);
-                            break;
+                            case EValueType.OBJECT:
 
-                        default:
+                                variantNamed.ValueObject = Convert.ToInt64(p.Value);
+                                break;
 
-                            variantNamed.ValueVarchar2 = Convert.ToString(p.Value);
-                            break;
-                    }
-                    return variantNamed;
-                });
+                            default:
+
+                                variantNamed.ValueVarchar2 = Convert.ToString(p.Value);
+                                break;
+                        }
+                        return variantNamed;
+                    });
+                }
 
                 TVariantNamedList variantNamedList = TVariantNamedList.Create((OracleConnection) _dbManager.DbConnection, variantNameds.ToArray());
 

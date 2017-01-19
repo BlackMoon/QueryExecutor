@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
@@ -19,7 +17,7 @@ namespace queryExecutor.Domain.DscQueryParameter
         public string FieldCode { get; set; }
 
         [NotMapped]
-        public string Value { get; set; }
+        public object Value { get; set; }
 
         [Column("VALUE_TYPE_NO")]
         public EValueType? ValueType { get; set; }

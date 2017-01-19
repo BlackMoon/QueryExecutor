@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens;
 using System.Linq;
 using System.ServiceModel;
 using queryExecutor.CQRS.Query;
@@ -16,57 +17,69 @@ namespace queryExecutor.Service.Utils
     public class Utils : IUtils
     {
         private readonly IQueryDispatcher _queryDispatcher;
+        private readonly UserNameSecurityToken _securityToken;
+
         public Utils(IQueryDispatcher queryDispatcher)
         {
             _queryDispatcher = queryDispatcher;
+
+            if (OperationContext.Current.IncomingMessageProperties.Security.IncomingSupportingTokens.Count > 0)
+                _securityToken = OperationContext.Current.IncomingMessageProperties.Security.IncomingSupportingTokens[0].SecurityToken as UserNameSecurityToken;
         }
 
-        public IEnumerable<DscQColumn> GetColumns(DscQColumnQuery query)
+        public DscQColumn[] GetColumns(DscQColumnQuery query)
         {
-            query.UserId = OperationContext.Current.ServiceSecurityContext.PrimaryIdentity.Name;
+            query.UserId = _securityToken?.UserName;
+            query.Password = _securityToken?.Password;
 
             DscQColumnQueryResult result = _queryDispatcher.Dispatch<DscQColumnQuery, DscQColumnQueryResult>(query);
-            return result.Items;
+            return result.Items.ToArray();
         }
 
-        public IEnumerable<DscQParameter> GetParameters(DscQParameterQuery query)
+        public DscQParameter[] GetParameters(DscQParameterQuery query)
         {
+            query.UserId = _securityToken?.UserName;
+            query.Password = _securityToken?.Password;
+
             DscQParameterQueryResult result = _queryDispatcher.Dispatch<DscQParameterQuery, DscQParameterQueryResult>(query);
-            return result.Items;
+            return result.Items.ToArray();
         }
 
-        public IEnumerable<DscQData> GetResults(DscQDataQuery query)
+        public DscQData[] GetResults(DscQDataQuery query)
         {
             // DscQParameters (из кеша)
             DscQParameterQuery parameterQuery = new DscQParameterQuery()
             {
                 Path = query.Path,
                 DataSource = query.DataSource,
-                //UserId = user,
-                //Password = pswd
+                UserId = _securityToken.UserName,
+                Password = _securityToken.Password
             };
 
             DscQParameterQueryResult parameterResult = _queryDispatcher.Dispatch<DscQParameterQuery, DscQParameterQueryResult>(parameterQuery);
 
-                //UserId = user,
-                //Password = pswd,
-            query.Parameters = query.Parameters2
-                .Select((p, i) => new DscQParameter()
-                {
-                    // заполнение ключа [No] для вычисления хеша
-                    No = i + 1,
-                    FieldCode = p.FieldCode,
-                    Value = p.Value,
-                    // valueType из списка DscQParameter's
-                    ValueType = parameterResult
-                        .Items
-                        .FirstOrDefault(item => item.FieldCode.Equals(p.FieldCode, StringComparison.OrdinalIgnoreCase))
-                        ?.ValueType
-                }).ToList();
-                    
+            query.UserId = _securityToken.UserName;
+            query.Password = _securityToken.Password;
+
+            if (query.DynamicParameters != null)
+            {
+                query.Parameters = query.DynamicParameters
+                    .Select((p, i) => new DscQParameter()
+                    {
+                        // заполнение ключа [No] для вычисления хеша
+                        No = i + 1,
+                        FieldCode = p.Key,
+                        Value = p.Value,
+                        // valueType из списка DscQParameter's
+                        ValueType = parameterResult
+                            .Items
+                            .FirstOrDefault(item => item.FieldCode.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
+                            ?.ValueType
+                    }).ToList();
+            }
 
             DscQDataQueryResult result = _queryDispatcher.Dispatch<DscQDataQuery, DscQDataQueryResult>(query);
-            return result.Items;
+            return result.Items.ToArray();
         }
     }
 }

@@ -5,8 +5,11 @@ using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
 using Castle.Core.Internal;
 
-namespace queryExecutor.Service.Factory
+namespace queryExecutor.Service.DI
 {
+    /// <summary>
+    /// Внедрение зависимостей
+    /// </summary>
     public class DiServiceBehavior : IServiceBehavior
     {
         /// <summary>

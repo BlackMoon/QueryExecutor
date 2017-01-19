@@ -4,7 +4,7 @@ namespace queryExecutor.Domain.DscQueryData
 {
     public class DscQData : KeyObject
     {
-        public IDictionary<string, object> DynamicProperties { get; }
+        public Dictionary<string, object> DynamicProperties { get; }
 
         public DscQData()
         {

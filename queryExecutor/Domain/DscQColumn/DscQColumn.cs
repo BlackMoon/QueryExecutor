@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Runtime.Serialization;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace queryExecutor.Domain.DscQColumn
@@ -18,10 +17,10 @@ namespace queryExecutor.Domain.DscQColumn
         public string FieldCode { get; set; }
 
         [Column("PRECISION")]
-        public int Precision { get; set; }
+        public int? Precision { get; set; }
 
         [Column("SCALE")]
-        public int Scale { get; set; }
+        public int? Scale { get; set; }
 
         [Column("VALUE_TYPE_NO")]
         public EValueType? ValueType { get; set; }

@@ -3,7 +3,7 @@ using System.IdentityModel.Selectors;
 
 namespace queryExecutor.Service
 {
-    public class CredentialValidator : UserNamePasswordValidator
+    public class GrantValidator : UserNamePasswordValidator
     {
         public override void Validate(string userName, string password)
         {
