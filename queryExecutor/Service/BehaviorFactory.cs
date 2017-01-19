@@ -2,6 +2,7 @@
 using System.ServiceModel;
 using System.ServiceModel.Activation;
 using DryIoc;
+using Serilog;
 
 namespace queryExecutor.Service
 {
@@ -26,8 +27,16 @@ namespace queryExecutor.Service
         {
             //Register the service as a type so it can be found from the instance provider
             Startup.Container.Register(serviceType);
-         
-            return new BehaviorHost(serviceType, baseAddresses);
+
+            try
+            {
+                return new BehaviorHost(serviceType, baseAddresses);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, string.Empty);
+                throw;
+            }
         }
     }
 }
