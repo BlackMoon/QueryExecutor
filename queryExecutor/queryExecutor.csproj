@@ -359,7 +359,7 @@
     <Compile Include="Service\DI\DiInstanceProvider.cs" />
     <Compile Include="Service\DI\DiServiceBehavior.cs" />
     <Compile Include="Service\BehaviorHost.cs" />
-    <Compile Include="Service\BehaviorFactory.cs" />
+    <Compile Include="Service\BehaviorHostFactory.cs" />
     <Compile Include="Service\GrantValidator.cs" />
     <Compile Include="Service\Logger\LogErrorHandler.cs" />
     <Compile Include="Service\Utils\IUtils.cs" />

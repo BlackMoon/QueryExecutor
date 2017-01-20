@@ -82,9 +82,10 @@ namespace queryExecutor
 
         protected void Application_Error()
         {
-            HttpException ex = Server.GetLastError() as HttpException;
+            Exception ex = Server.GetLastError();
+            HttpException httpEx = ex as HttpException;
 
-            int statusCode = ex?.GetHttpCode() ?? 500;
+            int statusCode = httpEx?.GetHttpCode() ?? 500;
             Log.Logger.Error(ex, string.Empty);
 
             Server.ClearError();
@@ -116,7 +117,7 @@ namespace queryExecutor
                 Environment.SetEnvironmentVariable("TNS_ADMIN", config.Tns_Admin);
 
             // svc route
-            RouteTable.Routes.Add(new ServiceRoute("soap/utils.svc", new BehaviorFactory(), typeof(Utils)));
+            RouteTable.Routes.Add(new ServiceRoute("soap/utils.svc", new BehaviorHostFactory(), typeof(Utils)));
                 
             // default mvc route
             RouteTable.Routes.MapRoute(
