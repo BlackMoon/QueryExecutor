@@ -304,9 +304,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ErrorController.cs" />
-    <Compile Include="Domain\DscQueryParameter\DscQParameter2.cs" />
     <Compile Include="Domain\ErrorMessage.cs" />
     <Compile Include="Domain\KeyObject.cs" />
+    <Compile Include="Domain\Dynamic\SerializableDynamicMetaObject.cs" />
     <Compile Include="GlobalExceptionFilter.cs" />
     <Compile Include="Identity\BasicAuthenticationAttribute.cs" />
     <Compile Include="Controllers\ColumnsController.cs" />
