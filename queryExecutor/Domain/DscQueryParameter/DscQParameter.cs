@@ -16,6 +16,15 @@ namespace queryExecutor.Domain.DscQueryParameter
         [Column("FIELD_CODE")]
         public string FieldCode { get; set; }
 
+        [Column("FORMAT_MASK")]
+        public string FormatMask { get; set; }
+
+        [Column("PRECISION")]
+        public int? Precision { get; set; }
+
+        [Column("SCALE")]
+        public int? Scale { get; set; }
+
         [NotMapped]
         public object Value { get; set; }
 

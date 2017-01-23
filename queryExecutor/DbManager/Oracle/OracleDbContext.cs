@@ -1,7 +1,8 @@
 ﻿using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
-using CodeFirstStoreFunctions;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity.Infrastructure;
 using queryExecutor.Domain.DscQColumn;
 using queryExecutor.Domain.DscQueryParameter;
 
@@ -28,11 +29,10 @@ namespace queryExecutor.DbManager.Oracle
             Database.Log = s => System.Diagnostics.Debug.WriteLine(s);
 #endif
         }
-
+       
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema(string.Empty);
-
         }
     }
 }

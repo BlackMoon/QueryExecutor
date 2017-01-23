@@ -62,10 +62,6 @@
       <HintPath>..\packages\Castle.Core.3.3.3\lib\net45\Castle.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="CodeFirstStoreFunctions, Version=0.1.0.0, Culture=neutral, PublicKeyToken=46c4868af4307d2c, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.CodeFirstStoreFunctions.1.0.0\lib\net45\CodeFirstStoreFunctions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="DryIoc, Version=2.9.7.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DryIoc.dll.2.9.7\lib\net45\DryIoc.dll</HintPath>
       <Private>True</Private>
@@ -196,11 +192,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Serilog.Sinks.File, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Sinks.File.3.1.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
+      <HintPath>..\packages\Serilog.Sinks.File.3.2.0\lib\net45\Serilog.Sinks.File.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Serilog.Sinks.RollingFile, Version=2.0.0.0, Culture=neutral, PublicKeyToken=24c2f752a8e58a10, processorArchitecture=MSIL">
-      <HintPath>..\packages\Serilog.Sinks.RollingFile.3.1.0\lib\net45\Serilog.Sinks.RollingFile.dll</HintPath>
+      <HintPath>..\packages\Serilog.Sinks.RollingFile.3.3.0\lib\net45\Serilog.Sinks.RollingFile.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
@@ -281,6 +277,9 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WCFMock">
+      <HintPath>..\queryExecutorTest\WCFMock.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Http.Formatting">
@@ -306,7 +305,6 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Domain\ErrorMessage.cs" />
     <Compile Include="Domain\KeyObject.cs" />
-    <Compile Include="Domain\Dynamic\SerializableDynamicMetaObject.cs" />
     <Compile Include="GlobalExceptionFilter.cs" />
     <Compile Include="Identity\BasicAuthenticationAttribute.cs" />
     <Compile Include="Controllers\ColumnsController.cs" />

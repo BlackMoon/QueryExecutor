@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
@@ -24,5 +25,11 @@ namespace queryExecutor.Domain.DscQColumn
 
         [Column("VALUE_TYPE_NO")]
         public EValueType? ValueType { get; set; }
+
+        
+        public static long QueryFind(string path)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

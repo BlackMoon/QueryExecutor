@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using queryExecutor.CQRS.Query;
 using queryExecutor.DbManager;
+using queryExecutor.DbManager.Oracle;
 
 namespace queryExecutor.Domain.DscQColumn.Query
 {
@@ -32,6 +33,7 @@ namespace queryExecutor.Domain.DscQColumn.Query
                     .Set<DscQColumn>()
                     .SqlQuery(sql, query.Path)
                     .AsQueryable();
+                
             }
             finally
             {

@@ -26,7 +26,8 @@ namespace queryExecutor.Domain.DscQueryParameter.Query
             IEnumerable<DscQParameter> dscQParameters = Enumerable.Empty<DscQParameter>();
             try
             {
-                string sql = @"SELECT p.no, p.name, p.field_Code fieldCode, ff.value_type_no valueType FROM DSC$QUERY_PARAMETERS p
+                string sql = @"SELECT p.no, p.name, p.field_Code fieldCode, ff.format_mask formatmask, ff.precision, ff.scale, ff.value_type_no valueType 
+                               FROM DSC$QUERY_PARAMETERS p
                                JOIN TDF$FLEX_FIELDS ff ON ff.no = p.field_no 
                                WHERE p.query_no = dsc$utils.query_find(:p0) AND p.is_hidden = 'F'";
 
