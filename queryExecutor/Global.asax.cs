@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Configuration;
+using System.Reflection;
 using System.ServiceModel.Activation;
 using System.Web;
+using System.Web.Hosting;
+using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using queryExecutor.Controllers;
@@ -46,6 +49,8 @@ namespace queryExecutor
 
         protected void Application_Start()
         {
+            HostingEnvironment.RegisterVirtualPathProvider(new ResourcePathProvider(Assembly.GetExecutingAssembly()));
+
             // BASEDIR вставляется в путь serilog:write-to:RollingFile.pathFormat
             Environment.SetEnvironmentVariable("BASEDIR", AppDomain.CurrentDomain.BaseDirectory);       
 
