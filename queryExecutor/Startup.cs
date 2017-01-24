@@ -36,10 +36,6 @@ namespace queryExecutor
             // Set up server configuration
             HttpConfiguration config = new HttpConfiguration();
 
-            // prevent [The query specified in the URI is not valid] message
-            //if (HttpContext.Current.Request.IsLocal)
-            //  config.Count().Filter().OrderBy().Expand().Select().MaxTop(null);*/
-
             // DscQRouteHandler
             config.MessageHandlers.Add(new DscQRouteHandler());
 
