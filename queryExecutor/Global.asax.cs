@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Configuration;
-using System.Linq;
 using System.ServiceModel.Activation;
-using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -16,52 +14,6 @@ namespace queryExecutor
 {
     public class MvcApplication : HttpApplication
     {
-        private const int WordLength = 3;
-        private const string Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789~!";
-
-        private static string _randomWord;
-
-        public static string RandomWord
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_randomWord))
-                {
-                    Random rnd = new Random();
-                    _randomWord = new string(Enumerable.Repeat(Chars, WordLength).Select(s => s[rnd.Next(s.Length)]).ToArray());
-                }
-
-                return _randomWord;
-            }
-        }
-
-        /// <summary>
-        /// Заменяет / в сегменте {path} в url вида {datasource}/{path}/odata.
-        /// </summary>
-        protected void Application_BeginRequest()
-        {
-            string uri = Request.Path;
-
-            Regex rgx = new Regex("^/[\\w.-]+/(.+)/odata", RegexOptions.IgnoreCase | RegexOptions.Compiled);
-            Match match = rgx.Match(uri);
-
-            if (match.Success)
-            {
-                foreach (Match m in rgx.Matches(uri))
-                {
-                    if (m.Groups.Count > 1)
-                    {
-                        string oldValue = m.Groups[1].Value,
-                               newValue = oldValue.Replace("/", RandomWord);
-
-                        uri = uri.Replace(oldValue, newValue);
-                    }
-                }
-
-                HttpContext.Current.RewritePath($"{uri}{Request.Url.Query}");
-            }
-        }
-
         protected void Application_EndRequest()
         {
             // 401: Unathorized (ASP.NET uses 401's internally to redirect users to the login page)

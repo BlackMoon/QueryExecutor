@@ -6,17 +6,19 @@
 <fieldset style="width:800px">
     <legend><strong>OData URL</strong></legend>
     <blockquote>
-        <strong>@pre@Html.Raw("[DataSource]/[QueryPath]/odata")</strong>
+        <strong>@pre@Html.Raw("&lt;DataSource&gt;/&lt;Path&gt;/odata[Parameters]")</strong>
     </blockquote>
     где:
     <blockquote>
-        [DataSource] - источник данных;
+        &lt;DataSource&gt; - источник данных;
         <br/>
-        [QueryPath] - путь к запросу;
+        &lt;Path&gt; - путь к запросу;
+        <br />
+        [Parameters] - параметры запроса (необязательные);
     </blockquote>
     Пример:
     <blockquote>
-        <strong>@pre@Html.Raw("aql.eco/Аварийные скважины/Скважины на которых были аварии/odata")</strong>
+        <strong>@pre@Html.Raw("aql.eco/Аварийные скважины/Анализ скважин за период/odata?pParam=10")</strong>
     </blockquote>
     Для получения данных необходима базовая авторизация (Authorization: Basic QWxhZGRpbjpPcGVuU2VzYW1l).
 </fieldset>

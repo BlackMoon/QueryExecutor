@@ -5,10 +5,13 @@ using System.Web;
 using System.Web.Http;
 using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
+using System.Web.OData.Formatter;
+using System.Web.OData.Formatter.Deserialization;
 using CacheManager.Core;
 using Castle.DynamicProxy;
 using DryIoc;
 using DryIoc.WebApi;
+using Microsoft.OData.Edm;
 using Microsoft.Owin;
 using Owin;
 using queryExecutor.CQRS.Query;
@@ -16,9 +19,9 @@ using queryExecutor.DbManager;
 using queryExecutor.Domain.DscQColumn;
 using queryExecutor.Domain.DscQueryData;
 using queryExecutor.Domain.DscQueryParameter;
-using Microsoft.OData.Edm;
 using queryExecutor.Interception;
 using queryExecutor.Interception.Attribute;
+using queryExecutor.OData;
 
 [assembly: OwinStartup("Startup", typeof(queryExecutor.Startup))]
 
@@ -27,16 +30,19 @@ namespace queryExecutor
     public class Startup
     {
         public static IContainer Container;
-
+        
         public void Configuration(IAppBuilder appBuilder)
         {
             // Set up server configuration
             HttpConfiguration config = new HttpConfiguration();
 
             // prevent [The query specified in the URI is not valid] message
-            if (HttpContext.Current.Request.IsLocal)
-                config.Count().Filter().OrderBy().Expand().Select().MaxTop(null);
-            
+            //if (HttpContext.Current.Request.IsLocal)
+            //  config.Count().Filter().OrderBy().Expand().Select().MaxTop(null);*/
+
+            // DscQRouteHandler
+            config.MessageHandlers.Add(new DscQRouteHandler());
+
             config.MapODataServiceRoute(
                 routeName: "DscQuery", 
                 routePrefix: "{datasource}/{path}/odata", 
@@ -88,6 +94,10 @@ namespace queryExecutor
             #endregion
             
             config.Filters.Add(new GlobalExceptionFilter());
+            
+            var odataFormatters = ODataMediaTypeFormatters.Create(new SkipNullValueODataSerializerProvider(), new DefaultODataDeserializerProvider());
+            config.Formatters.InsertRange(0, odataFormatters);
+            
             appBuilder.UseWebApi(config);
         }
 

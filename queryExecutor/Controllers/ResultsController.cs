@@ -10,6 +10,7 @@ using queryExecutor.Domain.DscQueryData.Query;
 using queryExecutor.Domain.DscQueryParameter;
 using queryExecutor.Domain.DscQueryParameter.Query;
 using queryExecutor.Identity;
+using queryExecutor.OData;
 
 namespace queryExecutor.Controllers
 {
@@ -25,7 +26,7 @@ namespace queryExecutor.Controllers
 
         [EnableQuery]
         // GET: odata/Data
-        public IQueryable<DscQData> Get([FromODataUri] string datasource, [FromODataUri] string path)
+        public IQueryable<DscQData> Get(string datasource, string path)
         {
             ClaimsPrincipal cp = (ClaimsPrincipal)User;
 
@@ -35,7 +36,7 @@ namespace queryExecutor.Controllers
             // DscQParameters (из кеша)
             DscQParameterQuery parameterQuery = new DscQParameterQuery()
             {
-                Path = path.Replace(MvcApplication.RandomWord, "\\"),
+                Path = path.Replace(DscQRouteHandler.RandomWord, "\\"),
                 DataSource = datasource,
                 UserId = user,
                 Password = pswd
@@ -45,7 +46,7 @@ namespace queryExecutor.Controllers
 
             DscQDataQuery dataQuery = new DscQDataQuery()
             {
-                Path = path.Replace(MvcApplication.RandomWord, "\\"),
+                Path = path.Replace(DscQRouteHandler.RandomWord, "\\"),
                 DataSource = datasource,
                 UserId = user,
                 Password = pswd,
@@ -72,7 +73,7 @@ namespace queryExecutor.Controllers
 
         [EnableQuery]
         // GET: odata/Data(5)
-        public SingleResult<DscQData> Get([FromODataUri] string datasource, [FromODataUri] string path, [FromODataUri] long key)
+        public SingleResult<DscQData> Get(string datasource, string path, long key)
         {
             IQueryable<DscQData> items = Get(datasource, path);
             return SingleResult.Create(items.Where(i => i.No == key));
