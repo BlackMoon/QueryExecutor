@@ -10,7 +10,7 @@ using queryExecutor.OData;
 
 namespace queryExecutor.Controllers
 {
-    //[BasicAuthentication]
+    [BasicAuthentication]
     public class ParametersController : ODataController
     {
         private readonly IQueryDispatcher _queryDispatcher;

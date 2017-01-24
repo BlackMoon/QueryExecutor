@@ -112,7 +112,8 @@ namespace queryExecutor.Domain.DscQueryData.Query
                             foreach (string column in columnNames)
                             {
                                 v = r[column];
-                                dscQData.DynamicProperties[column] = (v != DBNull.Value) ? v : null;
+                                if (v != DBNull.Value)
+                                    dscQData.DynamicProperties[column] = v;
                             }
 
                             return dscQData;
