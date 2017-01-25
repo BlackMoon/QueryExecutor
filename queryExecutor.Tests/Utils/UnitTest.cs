@@ -15,9 +15,10 @@ namespace queryExecutor.Tests.Utils
     [TestClass]
     public class UnitTest
     {
-        private readonly ChannelFactory<IUtils> _factory = new ChannelFactory<IUtils>("WSHttpBinding_IUtils");
-
         private readonly Mock<IUtilsChannel> _channelMock = new Mock<IUtilsChannel>(MockBehavior.Strict);
+
+        private ChannelFactory<IUtils> _factory;
+        private IUtils _client;
 
         [TestInitialize]
         public void Initialize()
@@ -97,19 +98,26 @@ namespace queryExecutor.Tests.Utils
                     }
                 });
 
+            // setup the channel
+            _factory = new ChannelFactory<IUtils>("WSHttpBinding_IUtils");
             if (_factory.Credentials != null)
             {
                 _factory.Credentials.UserName.Password = "ECO";
                 _factory.Credentials.UserName.UserName = "ECO";
             }
+            _client = _factory.CreateChannel();
+        }
+
+        [TestCleanup]
+        public void CleanUp()
+        {
+            _factory.Close();                
         }
 
         [TestMethod]
         public void Test_GetColumns()
         {
             // arrange
-            IUtils client = _factory.CreateChannel();
-
             DscQColumnQuery query = new DscQColumnQuery()
             {
                 DataSource = "aql.eco",
@@ -117,7 +125,7 @@ namespace queryExecutor.Tests.Utils
             };
 
             // act
-            DscQColumn[] result = client.GetColumns(query);
+            DscQColumn[] result = _client.GetColumns(query);
 
             // assert
             Assert.IsNotNull(result);
@@ -144,8 +152,6 @@ namespace queryExecutor.Tests.Utils
         public void Test_GetParameters()
         {
             // arrange
-            IUtils client = _factory.CreateChannel();
-
             DscQParameterQuery query = new DscQParameterQuery()
             {
                 DataSource = "aql.eco",
@@ -153,7 +159,7 @@ namespace queryExecutor.Tests.Utils
             };
 
             // act
-            DscQParameter[] result = client.GetParameters(query);
+            DscQParameter[] result = _client.GetParameters(query);
 
             // assert
             Assert.IsNotNull(result);
@@ -180,8 +186,6 @@ namespace queryExecutor.Tests.Utils
         public void Test_GetResults()
         {
             // arrange
-            IUtils client = _factory.CreateChannel();
-
             DscQDataQuery query = new DscQDataQuery()
             {
                 DataSource = "aql.eco",
@@ -195,8 +199,8 @@ namespace queryExecutor.Tests.Utils
             };
 
             // act  
-            DscQData[] result = client.GetResults(query);
-            DscQColumn[] columns = client.GetColumns(columnQuery);
+            DscQData[] result = _client.GetResults(query);
+            DscQColumn[] columns = _client.GetColumns(columnQuery);
 
             // assert
             Assert.IsNotNull(result);
