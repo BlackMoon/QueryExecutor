@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="1a631d39-ae23-4ac6-9ec1-1906c3be775a" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://web.aquilon.ru:807/soap/utils.svc?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Utils.wsdl" MetadataType="Wsdl" ID="1affcafb-862e-4306-b3e9-f82ba226409d" SourceId="1" SourceUrl="http://web.aquilon.ru:807/soap/utils.svc?wsdl" />
+    <MetadataFile FileName="utils.xsd" MetadataType="Schema" ID="3c88f3c2-fd4d-4196-ace4-09499160076e" SourceId="1" SourceUrl="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd7" />
+    <MetadataFile FileName="utils1.xsd" MetadataType="Schema" ID="daa89f89-ec15-4164-945a-683ac414685f" SourceId="1" SourceUrl="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd8" />
+    <MetadataFile FileName="utils2.xsd" MetadataType="Schema" ID="3aab0509-c2a8-475a-bff1-22a3a30f27a9" SourceId="1" SourceUrl="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd9" />
+    <MetadataFile FileName="utils3.xsd" MetadataType="Schema" ID="9521e574-2918-408c-ae4a-f4758d32657a" SourceId="1" SourceUrl="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd6" />
+    <MetadataFile FileName="utils4.xsd" MetadataType="Schema" ID="378a9666-c766-4cdf-a95d-209b52ee9a66" SourceId="1" SourceUrl="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd0" />
+    <MetadataFile FileName="utils5.xsd" MetadataType="Schema" ID="742974b3-0af7-4b0c-b923-388aa2e5df7b" SourceId="1" SourceUrl="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd1" />
+    <MetadataFile FileName="utils6.xsd" MetadataType="Schema" ID="f3c4d68f-3318-4d15-88ea-c31d393c39bf" SourceId="1" SourceUrl="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd2" />
+    <MetadataFile FileName="utils7.xsd" MetadataType="Schema" ID="7341d9e5-c923-42b4-bd68-cc98134c1bad" SourceId="1" SourceUrl="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd3" />
+    <MetadataFile FileName="utils8.xsd" MetadataType="Schema" ID="33cc696a-6190-44ee-92e2-b1a8ce242a08" SourceId="1" SourceUrl="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd4" />
+    <MetadataFile FileName="utils9.xsd" MetadataType="Schema" ID="8459756b-5c0d-4f59-9ad3-e4264fe95a1c" SourceId="1" SourceUrl="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd5" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

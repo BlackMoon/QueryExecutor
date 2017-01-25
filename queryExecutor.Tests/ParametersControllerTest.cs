@@ -3,10 +3,8 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
-using System.Web.OData;
 using System.Web.OData.Builder;
 using System.Web.OData.Extensions;
-using System.Web.OData.Routing;
 using Microsoft.OData.Edm;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using queryExecutor.Domain.DscQueryParameter;
@@ -27,17 +25,19 @@ namespace queryExecutor.Tests
 
         public ParametersControllerTest()
         {
-            var configuration = new HttpConfiguration
+            var config = new HttpConfiguration
             {
                 IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Always
             };
 
-            configuration.MapODataServiceRoute(
+            config.MapODataServiceRoute(
                  routeName: "DscQuery",
                  routePrefix: "{datasource}/{path}/odata",
                  model: GetQueryEdmModel());
 
-            HttpServer server = new HttpServer(configuration);
+            config.EnsureInitialized();
+
+            HttpServer server = new HttpServer(config);
             _client = new HttpClient(server);
         }
 

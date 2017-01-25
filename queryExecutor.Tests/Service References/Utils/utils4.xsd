@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://web.aquilon.ru" elementFormDefault="qualified" targetNamespace="http://web.aquilon.ru" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQColumn.Query" />
+  <xs:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQColumn" />
+  <xs:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryParameter.Query" />
+  <xs:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryParameter" />
+  <xs:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryData.Query" />
+  <xs:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd9" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryData" />
+  <xs:element name="GetColumns">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQColumn.Query" minOccurs="0" name="query" nillable="true" type="q1:DscQColumnQuery" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetColumnsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQColumn" minOccurs="0" name="GetColumnsResult" nillable="true" type="q2:ArrayOfDscQColumn" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetParameters">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryParameter.Query" minOccurs="0" name="query" nillable="true" type="q3:DscQParameterQuery" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetParametersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryParameter" minOccurs="0" name="GetParametersResult" nillable="true" type="q4:ArrayOfDscQParameter" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetResults">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryData.Query" minOccurs="0" name="query" nillable="true" type="q5:DscQDataQuery" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetResultsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryData" minOccurs="0" name="GetResultsResult" nillable="true" type="q6:ArrayOfDscQData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQColumn" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQColumn" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain" />
+  <xs:complexType name="ArrayOfDscQColumn">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DscQColumn" nillable="true" type="tns:DscQColumn" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDscQColumn" nillable="true" type="tns:ArrayOfDscQColumn" />
+  <xs:complexType name="DscQColumn">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/queryExecutor.Domain" base="q1:KeyObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FieldCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Precision" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="Scale" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="ValueType" nillable="true" type="q1:EValueType" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="DscQColumn" nillable="true" type="tns:DscQColumn" />
+</xs:schema>

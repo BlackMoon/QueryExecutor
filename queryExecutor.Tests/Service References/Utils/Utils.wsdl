@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://web.aquilon.ru" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Utils" targetNamespace="http://web.aquilon.ru" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="WSHttpBinding_IUtils_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SymmetricBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:ProtectionToken>
+              <wsp:Policy>
+                <sp:X509Token sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Never">
+                  <wsp:Policy>
+                    <sp:RequireDerivedKeys />
+                    <sp:RequireThumbprintReference />
+                    <sp:WssX509V3Token10 />
+                  </wsp:Policy>
+                </sp:X509Token>
+              </wsp:Policy>
+            </sp:ProtectionToken>
+            <sp:AlgorithmSuite>
+              <wsp:Policy>
+                <sp:Basic256 />
+              </wsp:Policy>
+            </sp:AlgorithmSuite>
+            <sp:Layout>
+              <wsp:Policy>
+                <sp:Strict />
+              </wsp:Policy>
+            </sp:Layout>
+            <sp:IncludeTimestamp />
+            <sp:EncryptSignature />
+            <sp:OnlySignEntireHeadersAndBody />
+          </wsp:Policy>
+        </sp:SymmetricBinding>
+        <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+              <wsp:Policy>
+                <sp:WssUsernameToken10 />
+              </wsp:Policy>
+            </sp:UsernameToken>
+          </wsp:Policy>
+        </sp:SignedSupportingTokens>
+        <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:MustSupportRefThumbprint />
+            <sp:MustSupportRefEncryptedKey />
+          </wsp:Policy>
+        </sp:Wss11>
+        <sp:Trust10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <wsp:Policy>
+            <sp:MustSupportIssuedTokens />
+            <sp:RequireClientEntropy />
+            <sp:RequireServerEntropy />
+          </wsp:Policy>
+        </sp:Trust10>
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IUtils_GetColumns_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IUtils_GetColumns_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IUtils_GetParameters_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IUtils_GetParameters_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IUtils_GetResults_Input_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="WSHttpBinding_IUtils_GetResults_output_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
+          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
+        </sp:SignedParts>
+        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+          <sp:Body />
+        </sp:EncryptedParts>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://web.aquilon.ru/Imports">
+      <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd0" namespace="http://web.aquilon.ru" />
+      <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQColumn.Query" />
+      <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQColumn" />
+      <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain" />
+      <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryParameter.Query" />
+      <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryParameter" />
+      <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryData.Query" />
+      <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd8" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd9" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryData" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IUtils_GetColumns_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetColumns" />
+  </wsdl:message>
+  <wsdl:message name="IUtils_GetColumns_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetColumnsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUtils_GetParameters_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetParameters" />
+  </wsdl:message>
+  <wsdl:message name="IUtils_GetParameters_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetParametersResponse" />
+  </wsdl:message>
+  <wsdl:message name="IUtils_GetResults_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetResults" />
+  </wsdl:message>
+  <wsdl:message name="IUtils_GetResults_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetResultsResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IUtils">
+    <wsdl:operation name="GetColumns">
+      <wsdl:input wsaw:Action="http://web.aquilon.ru/IUtils/GetColumns" message="tns:IUtils_GetColumns_InputMessage" />
+      <wsdl:output wsaw:Action="http://web.aquilon.ru/IUtils/GetColumnsResponse" message="tns:IUtils_GetColumns_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetParameters">
+      <wsdl:input wsaw:Action="http://web.aquilon.ru/IUtils/GetParameters" message="tns:IUtils_GetParameters_InputMessage" />
+      <wsdl:output wsaw:Action="http://web.aquilon.ru/IUtils/GetParametersResponse" message="tns:IUtils_GetParameters_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetResults">
+      <wsdl:input wsaw:Action="http://web.aquilon.ru/IUtils/GetResults" message="tns:IUtils_GetResults_InputMessage" />
+      <wsdl:output wsaw:Action="http://web.aquilon.ru/IUtils/GetResultsResponse" message="tns:IUtils_GetResults_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="WSHttpBinding_IUtils" type="tns:IUtils">
+    <wsp:PolicyReference URI="#WSHttpBinding_IUtils_policy" />
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetColumns">
+      <soap12:operation soapAction="http://web.aquilon.ru/IUtils/GetColumns" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IUtils_GetColumns_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IUtils_GetColumns_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetParameters">
+      <soap12:operation soapAction="http://web.aquilon.ru/IUtils/GetParameters" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IUtils_GetParameters_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IUtils_GetParameters_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetResults">
+      <soap12:operation soapAction="http://web.aquilon.ru/IUtils/GetResults" style="document" />
+      <wsdl:input>
+        <wsp:PolicyReference URI="#WSHttpBinding_IUtils_GetResults_Input_policy" />
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <wsp:PolicyReference URI="#WSHttpBinding_IUtils_GetResults_output_policy" />
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Utils">
+    <wsdl:port name="WSHttpBinding_IUtils" binding="tns:WSHttpBinding_IUtils">
+      <soap12:address location="http://web.aquilon.ru:807/soap/utils.svc" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>http://web.aquilon.ru:807/soap/utils.svc</wsa10:Address>
+        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
+          <KeyInfo xmlns="http://www.w3.org/2000/09/xmldsig#">
+            <X509Data>
+              <X509Certificate>MIIEuDCCAqCgAwIBAgIQVSbN6qfEUbpA5Z8MdkaqtTANBgkqhkiG9w0BAQUFADAYMRYwFAYDVQQDEw1RdWVyeUV4ZWN1dG9yMB4XDTE3MDExMjIxMDAwMFoXDTI3MDExOTIxMDAwMFowGDEWMBQGA1UEAxMNUXVlcnlFeGVjdXRvcjCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAMjjv6dQIIpXBGbwmE3utWyXlXfdGyY5kPVLS0FyJNA1y0GvXslNHdXsq682BteZV1HabivMnkZm13yXYSGdjdGFepD14Upxk/JqEKCEfRslakeqvE+LQRM+Ici4gHyZK7SEXoSu7iQ+CCo1kKnuUKqLURH54eKyKBk08AwfB89aGzmuBIiA6pnJQYRJwk5PDft5mJdcpnYIE77FWne7+jX3gxpXX5M0UTgmhIYZoz8/YOoLgL2Wa+9JMvPhlpc1N88+Bk73q99S12HuS7kA6+OLNsmiHV8iqLDPBvjjy1waOaMijHv84aQSAZulpLeN4uQhyfq7qSnmiM48V8YneqG1PEkuIrrKXczV5Pof+/Cx16d5UYHRd2vT+jvZmap5Zm4Dx8GffXNgEnqVQ9LBrIWXJVOFgz85zjIN0+XZJxSqx2u1m8vMtXZZHcFjHEAfXbbaN0cu4u9HmA2YrBEkdJSl46o0sdFQJghb1gZ9DptsZJFANvMTFMXO9461sU7cTK8i6w9eWEMojWY6MMiFHJoHhdwHA7CXybTGXeyytb6AUh1stFj/5OnRdCaek9mNDqnjKoB7HXdimFMOabo6GOZoa5oN3VhLnrtZdOcRgyyQJicdVUDN0lm1yu7A57Iu2GQXiyt8cRynrr16K0BqDzN/pdgOKkt0J6ddEF2QgNDZAgMBAAEwDQYJKoZIhvcNAQEFBQADggIBAMHS7FKnBqUrGe9uRSR9JAg46zBrE7heZWbv+nsf771e0VLCNepkDW8Tbwj8RolRS5m2k0mc12aWDPjIcroqKA+BJk48EgKuT1sNRtn7ArvhAD9XLLnPR4URf9Xcuo6zixbBhge6J+fhWWm+RrVURdsCiZrwyuo770jMKOPPmxfYHzXfANx7qULGKMI3t/LN7I5OP/9G/5kGq+1l4ViV7viCm4XOY4mKde4fjbJGMNxf+Xr+BGDbYTkfmb3SA5mG5mYkOdMhz5gXrieST6d1TM4rfpXVU+cXpU8OjzlnwqCMn0LSQLR+L3Bl0MRMqMEjYvZWuIvjmqvVpsAgg5i2+7q37l9h/nKsp5X/iMYFqKJZV+WayDEIRAX4j8kGa6g3dJnmrK5Nmu+TcAdE49Rw2SAztCPgx1WHlsXEPCYOG84xBonMcLvoGJL+QXw0nXcLYVy2duklbOJ0Nps5/pqQMPnt6d8YJL5XCUJfaH7DqNGrUmtzSBc8z1sc953Uw5ssJ2n9LWDLY3Yf6qr2Y7MRfvZX84jtjd3qDAGM4v+X5NBdcoabTAuQjoxlb6ZOUVUIfToB0lVXjXS58ypDVnJXg9R9zYuklHTI2bdAtGctdMnhNZBjUsr8QUYQRLx/Xnhqw7Mt1sgR/z/NOzIAFoHQSIJ5Cy4TUh4AVdhNDHaaO3C/</X509Certificate>
+            </X509Data>
+          </KeyInfo>
+        </Identity>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
