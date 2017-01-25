@@ -9,8 +9,9 @@ using queryExecutor.Domain.DscQueryData;
 using queryExecutor.Domain.DscQueryData.Query;
 using queryExecutor.Domain.DscQueryParameter;
 using queryExecutor.Domain.DscQueryParameter.Query;
+using queryExecutor.Tests.Utils;
 
-namespace queryExecutor.Tests.Utils
+namespace queryExecutor.Tests
 {
     [TestClass]
     public class UnitTest
