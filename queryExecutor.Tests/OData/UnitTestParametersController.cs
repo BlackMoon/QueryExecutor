@@ -33,7 +33,7 @@ namespace queryExecutor.Tests.OData
                 .Returns((DscQParameterQuery q) =>
                 {
 
-                    if (q.DataSource.Equals(DataSource) && q.Path.Equals(Path))
+                    if (q.DataSource.Equals(DataSource) && q.Path.Equals(Path) && q.UserId.Equals(UserId) && q.Password.Equals(Password))
                     {
                         return
                             new DscQParameterQueryResult()
@@ -76,7 +76,8 @@ namespace queryExecutor.Tests.OData
 
             ParametersController controller = new ParametersController(_mock.Object)
             {
-                Request = request
+                Request = request,
+                User = GetPrincipal()
             };
 
             ODataQueryOptions opts = new ODataQueryOptions<DscQParameter>(new ODataQueryContext(GetEdmModel(), typeof(DscQParameter), new ODataPath()), request);

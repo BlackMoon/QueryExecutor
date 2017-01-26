@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Web.Http;
 using System.Web.Http.Hosting;
 using System.Web.OData.Extensions;
 using Microsoft.OData.Edm;
 using Moq;
 using queryExecutor.CQRS.Query;
+using queryExecutor.Identity;
 
 namespace queryExecutor.Tests.OData
 {
@@ -30,6 +33,15 @@ namespace queryExecutor.Tests.OData
                 model: GetEdmModel());
 
             _config.EnsureInitialized();
+        }
+
+        protected IPrincipal GetPrincipal()
+        {
+            Claim nameClaim = new Claim(ClaimTypes.Name, UserId),
+                  pswdClaim = new Claim(BasicClaimTypes.Password, Password);
+
+            ClaimsIdentity identity = new ClaimsIdentity(new[] { nameClaim, pswdClaim }, AuthenticationTypes.Basic);
+            return new ClaimsPrincipal(identity);
         }
 
         protected HttpRequestMessage GetRequest(string uri)

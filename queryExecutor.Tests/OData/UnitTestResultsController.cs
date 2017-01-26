@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Net.Http;
+using System.Security.Principal;
 using System.Web.OData;
 using System.Web.OData.Builder;
 using System.Web.OData.Query;
@@ -34,7 +35,7 @@ namespace queryExecutor.Tests.OData
                 .Setup(m => m.Dispatch<DscQDataQuery, DscQDataQueryResult>(It.IsAny<DscQDataQuery>()))
                 .Returns((DscQDataQuery q) =>
                 {
-                    if (q.DataSource.Equals(DataSource) && q.Path.Equals(Path))
+                    if (q.DataSource.Equals(DataSource) && q.Path.Equals(Path) && q.UserId.Equals(UserId) && q.Password.Equals(Password))
                     {
                         return
                             new DscQDataQueryResult
@@ -63,7 +64,7 @@ namespace queryExecutor.Tests.OData
                 .Returns((DscQColumnQuery q) =>
                 {
 
-                    if (q.DataSource.Equals(DataSource) && q.Path.Equals(Path))
+                    if (q.DataSource.Equals(DataSource) && q.Path.Equals(Path) && q.UserId.Equals(UserId) && q.Password.Equals(Password))
                     {
                         return
                             new DscQColumnQueryResult
@@ -109,7 +110,7 @@ namespace queryExecutor.Tests.OData
                 .Returns((DscQParameterQuery q) =>
                 {
 
-                    if (q.DataSource.Equals(DataSource) && q.Path.Equals(Path))
+                    if (q.DataSource.Equals(DataSource) && q.Path.Equals(Path) && q.UserId.Equals(UserId) && q.Password.Equals(Password))
                     {
                         return
                             new DscQParameterQueryResult()
@@ -149,10 +150,12 @@ namespace queryExecutor.Tests.OData
         {
             //arrange
             HttpRequestMessage request = GetRequest("aql.eco/Test/all_objects/odata/Results");
+            IPrincipal principal = GetPrincipal();
 
             ResultsController controller = new ResultsController(_mock.Object)
             {
-                Request = request
+                Request = request,
+                User = principal
             };
 
             ODataQueryOptions opts = new ODataQueryOptions<DscQData>(new ODataQueryContext(GetEdmModel(), typeof(DscQData), new ODataPath()), request);
@@ -162,7 +165,8 @@ namespace queryExecutor.Tests.OData
 
             ColumnsController controller1 = new ColumnsController(_mock.Object)
             {
-                Request = request1
+                Request = request1,
+                User = principal
             };
 
             ODataQueryOptions opts1 = new ODataQueryOptions<DscQColumn>(new ODataQueryContext(GetEdmModel(), typeof(DscQColumn), new ODataPath()), request);

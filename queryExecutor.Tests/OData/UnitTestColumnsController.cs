@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.OData;
 using System.Web.OData.Builder;
 using System.Web.OData.Query;
@@ -12,6 +13,7 @@ using queryExecutor.CQRS.Query;
 using queryExecutor.Domain;
 using queryExecutor.Domain.DscQColumn;
 using queryExecutor.Domain.DscQColumn.Query;
+using queryExecutor.Identity;
 
 namespace queryExecutor.Tests.OData
 {
@@ -31,7 +33,7 @@ namespace queryExecutor.Tests.OData
                 .Returns((DscQColumnQuery q) =>
                 {
 
-                    if (q.DataSource.Equals(DataSource) && q.Path.Equals(Path))
+                    if (q.DataSource.Equals(DataSource) && q.Path.Equals(Path) && q.UserId.Equals(UserId) && q.Password.Equals(Password))
                     {
                         return
                             new DscQColumnQueryResult
@@ -81,9 +83,10 @@ namespace queryExecutor.Tests.OData
 
             ColumnsController controller = new ColumnsController(_mock.Object)
             {
-                Request = request
+                Request = request,
+                User = GetPrincipal()
             };
-
+            
             ODataQueryOptions opts = new ODataQueryOptions<DscQColumn>(new ODataQueryContext(GetEdmModel(), typeof(DscQColumn), new ODataPath()), request);
 
             //act
