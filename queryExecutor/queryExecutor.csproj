@@ -381,7 +381,6 @@
     </Content>
     <None Include="Properties\PublishProfiles\pb.pubxml" />
     <EmbeddedResource Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Web.config" />
     <EmbeddedResource Include="Views\Shared\Error.cshtml" />
     <EmbeddedResource Include="Views\_ViewStart.cshtml" />
     <EmbeddedResource Include="Views\Shared\_Layout.cshtml" />
