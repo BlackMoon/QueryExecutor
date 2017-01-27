@@ -14,6 +14,7 @@ using queryExecutor.Domain.DscQColumn;
 using queryExecutor.Domain.DscQColumn.Query;
 using queryExecutor.Domain.DscQueryParameter;
 using queryExecutor.Domain.DscQueryParameter.Query;
+using queryExecutor.Domain.TdfFlexField;
 
 namespace queryExecutor.Tests.OData
 {
@@ -45,20 +46,26 @@ namespace queryExecutor.Tests.OData
                                         No = 12673108,
                                         Name = "Дата начала",
                                         FieldCode = "PDATE_BEGIN",
-                                        FormatMask = "dd.mm.yyyy",
-                                        Precision = 0,
-                                        Scale = 0,
-                                        ValueType = EValueType.DATE
+                                        FlexField = new TdfFlexField()
+                                        {
+                                            FormatMask = "dd.mm.yyyy",
+                                            Precision = 0,
+                                            Scale = 0,
+                                            ValueType = EValueType.DATE
+                                        }
                                     },
                                     new DscQParameter()
                                     {
                                         No = 12673109,
                                         Name = "Дата окончания",
                                         FieldCode = "PDATE_END",
-                                        FormatMask = "dd.mm.yyyy",
-                                        Precision = 0,
-                                        Scale = 0,
-                                        ValueType = EValueType.DATE
+                                        FlexField = new TdfFlexField()
+                                        {
+                                            FormatMask = "dd.mm.yyyy",
+                                            Precision = 0,
+                                            Scale = 0,
+                                            ValueType = EValueType.DATE
+                                        }
                                     }
                                 }
                                 .AsQueryable()
