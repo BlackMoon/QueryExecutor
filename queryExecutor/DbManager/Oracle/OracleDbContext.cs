@@ -1,6 +1,8 @@
 ﻿using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
+using System.Data.Entity.Core.Objects;
+using System.Linq;
 using EntityFramework.Functions;
 using queryExecutor.Domain.DscQColumn;
 using queryExecutor.Domain.DscQueryParameter;
@@ -22,8 +24,6 @@ namespace queryExecutor.DbManager.Oracle
 
         public DbSet<DscQParameter> DscQParameters { get; set; }
 
-        public DbSet<TdfFlexField> TdfFlexFields { get; set; }
-
         public OracleDbContext(IDbConnection existingConnection, bool contextOwnsConnection)
             : base((DbConnection) existingConnection, contextOwnsConnection)
         {
@@ -41,7 +41,6 @@ namespace queryExecutor.DbManager.Oracle
 
         [ComposableScalarValuedFunction("QUERY_FIND", Schema = "DSC$UTILS")]
         [return: Parameter(DbType = "number")]
-        public decimal DscUtils_QueryFind([Parameter(DbType = "varchar2")]string queryPath) => Function.CallNotSupported<decimal>();
-
+        public decimal DscUtils_QueryFind([Parameter(DbType = "varchar2")] string queryPath) => Function.CallNotSupported<decimal>();
     }
 }

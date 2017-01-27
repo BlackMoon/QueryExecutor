@@ -31,7 +31,7 @@ namespace queryExecutor.Domain.DscQueryParameter.Query
                 _dbManager.Open($"Data Source={query.DataSource};User Id={query.UserId};Password={query.Password}");
 
                 OracleDbContext ctx = _dbManager.DbContext.Cast<OracleDbContext>();
-
+               
                 dscQParameters = ctx.DscQParameters
                     .Where(p => p.QueryNo == ctx.DscUtils_QueryFind(query.Path))
                     .Include(p => p.FlexField)
