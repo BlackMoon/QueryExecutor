@@ -11,6 +11,12 @@ namespace queryExecutor.Domain.DscQColumn
     [Table("DSC$QUERY_COLUMNS")]
     public class DscQColumn : KeyObject
     {
+        [Column("QUERY_NO")]
+        public long QueryNo { get; set; }
+
+        [Column("ORDER_NO")]
+        public int OrderNo { get; set; }
+
         [Column("NAME")]
         public string Name { get; set; }
 

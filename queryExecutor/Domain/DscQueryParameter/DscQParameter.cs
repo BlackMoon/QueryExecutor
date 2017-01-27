@@ -10,26 +10,23 @@ namespace queryExecutor.Domain.DscQueryParameter
     [Table("DSC$QUERY_PARAMETERS")]
     public class DscQParameter : KeyObject
     {
+        [Column("FIELD_NO")]
+        public long FieldNo { get; set; }
+
+        [Column("QUERY_NO")]
+        public long QueryNo { get; set; }
+
         [Column("NAME")]
         public string Name { get; set; }
-
+        
         [Column("FIELD_CODE")]
         public string FieldCode { get; set; }
 
-        [Column("FORMAT_MASK")]
-        public string FormatMask { get; set; }
-
-        [Column("PRECISION")]
-        public int? Precision { get; set; }
-
-        [Column("SCALE")]
-        public int? Scale { get; set; }
+        [ForeignKey("FieldNo")]
+        public TdfFlexField.TdfFlexField FlexField { get; set; }
 
         [NotMapped]
         public object Value { get; set; }
-
-        [Column("VALUE_TYPE_NO")]
-        public EValueType? ValueType { get; set; }
 
         public override int GetHashCode()
         {

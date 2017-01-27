@@ -9,6 +9,7 @@ using queryExecutor.CQRS.Query;
 using queryExecutor.Domain.DscQueryData.Query;
 using queryExecutor.Domain.DscQueryParameter;
 using queryExecutor.Domain.DscQueryParameter.Query;
+using queryExecutor.Domain.TdfFlexField;
 using queryExecutor.Identity;
 using queryExecutor.OData;
 
@@ -58,11 +59,11 @@ namespace queryExecutor.Controllers
                         No = i + 1,
                         FieldCode = p.Key,
                         Value = p.Value,
-                        // valueType из списка DscQParameter's
-                        ValueType = parameterResult
+                        // FlexField из списка DscQParameter's
+                        FlexField = parameterResult
                             .Items
                             .FirstOrDefault(item => item.FieldCode.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
-                            ?.ValueType
+                            ?.FlexField
                     })
                     .ToList()
             };

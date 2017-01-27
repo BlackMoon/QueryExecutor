@@ -88,7 +88,7 @@ namespace queryExecutor
 
             Container.UseInstance(Container);
             #endregion
-            
+           
             config.Filters.Add(new GlobalExceptionFilter());
             
             var odataFormatters = ODataMediaTypeFormatters.Create(new SkipNullValueODataSerializerProvider(), new DefaultODataDeserializerProvider());

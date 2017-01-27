@@ -40,7 +40,7 @@ namespace queryExecutor.Domain.DscQueryData.Query
                     {
                         TVariantNamed variantNamed = new TVariantNamed() {Name = p.FieldCode};
 
-                        switch (p.ValueType)
+                        switch (p.FlexField?.ValueType)
                         {
                             case EValueType.DATE:
 

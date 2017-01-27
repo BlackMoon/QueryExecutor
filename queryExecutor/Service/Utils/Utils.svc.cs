@@ -69,12 +69,13 @@ namespace queryExecutor.Service.Utils
                         No = i + 1,
                         FieldCode = p.Key,
                         Value = p.Value,
-                        // valueType из списка DscQParameter's
-                        ValueType = parameterResult
+                        // FlexField из списка DscQParameter's
+                        FlexField = parameterResult
                             .Items
                             .FirstOrDefault(item => item.FieldCode.Equals(p.Key, StringComparison.OrdinalIgnoreCase))
-                            ?.ValueType
-                    }).ToList();
+                            ?.FlexField
+                    })
+                    .ToList();
             }
 
             DscQDataQueryResult result = _queryDispatcher.Dispatch<DscQDataQuery, DscQDataQueryResult>(query);

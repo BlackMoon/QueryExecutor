@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using queryExecutor.CQRS.Query;
 using queryExecutor.DbManager;
+using queryExecutor.DbManager.Oracle;
 
 namespace queryExecutor.Domain.DscQueryParameter.Query
 {
@@ -26,17 +28,13 @@ namespace queryExecutor.Domain.DscQueryParameter.Query
             IEnumerable<DscQParameter> dscQParameters = Enumerable.Empty<DscQParameter>();
             try
             {
-                string sql = @"SELECT p.no, p.name, p.field_Code fieldCode, ff.format_mask formatmask, ff.precision, ff.scale, ff.value_type_no valueType 
-                               FROM DSC$QUERY_PARAMETERS p
-                               JOIN TDF$FLEX_FIELDS ff ON ff.no = p.field_no 
-                               WHERE p.query_no = dsc$utils.query_find(:p0) AND p.is_hidden = 'F'";
-
                 _dbManager.Open($"Data Source={query.DataSource};User Id={query.UserId};Password={query.Password}");
 
-                dscQParameters = _dbManager
-                    .DbContext
-                    .Set<DscQParameter>()
-                    .SqlQuery(sql, query.Path)
+                OracleDbContext ctx = _dbManager.DbContext.Cast<OracleDbContext>();
+
+                dscQParameters = ctx.DscQParameters
+                    .Where(p => p.QueryNo == ctx.DscUtils_QueryFind(query.Path))
+                    .Include(p => p.FlexField)
                     .ToList();
             }
             finally
