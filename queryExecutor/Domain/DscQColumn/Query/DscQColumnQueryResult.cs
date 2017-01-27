@@ -1,10 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 using queryExecutor.CQRS.Query;
 
 namespace queryExecutor.Domain.DscQColumn.Query
 {
     public class DscQColumnQueryResult : IQueryResult
     {
-        public IQueryable<DscQColumn> Items { get; set; }
+        public IEnumerable<DscQColumn> Items { get; set; }
     }
 }

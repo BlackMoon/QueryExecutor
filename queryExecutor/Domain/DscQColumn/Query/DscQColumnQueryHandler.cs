@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using queryExecutor.CQRS.Query;
 using queryExecutor.DbManager;
 using queryExecutor.DbManager.Oracle;
@@ -19,7 +20,7 @@ namespace queryExecutor.Domain.DscQColumn.Query
 
         public DscQColumnQueryResult Execute(DscQColumnQuery query)
         {
-            IQueryable<DscQColumn> dscQColumns;
+            IEnumerable<DscQColumn> dscQColumns;
             try
             {
                 _dbManager.Open($"Data Source={query.DataSource};User Id={query.UserId};Password={query.Password}");
@@ -28,7 +29,8 @@ namespace queryExecutor.Domain.DscQColumn.Query
 
                 dscQColumns = ctx.DscQColumns
                     .Where(c => c.QueryNo == ctx.DscUtils_QueryFind(query.Path))
-                    .OrderBy(c => c.OrderNo);
+                    .OrderBy(c => c.OrderNo)
+                    .ToList();
             }
             finally
             {

@@ -35,25 +35,15 @@ namespace queryExecutor.Controllers
             };
 
             DscQColumnQueryResult result = _queryDispatcher.Dispatch<DscQColumnQuery, DscQColumnQueryResult>(columnQuery);
-            return result.Items;
+            return result.Items.AsQueryable();
         }
 
         // GET: odata/Columns(5)
         [EnableQuery]
         public SingleResult<DscQColumn> Get(string datasource, string path, long key)
         {
-            ClaimsPrincipal cp = (ClaimsPrincipal)User;
-
-            DscQColumnQuery columnQuery = new DscQColumnQuery()
-            {
-                Path = path.Replace(DscQRouteHandler.RandomWord, "\\"),
-                DataSource = datasource,
-                UserId = cp.FindFirst(ClaimTypes.Name)?.Value,
-                Password = cp.FindFirst(BasicClaimTypes.Password)?.Value
-            };
-
-            DscQColumnQueryResult result = _queryDispatcher.Dispatch<DscQColumnQuery, DscQColumnQueryResult>(columnQuery);
-            return SingleResult.Create(result.Items.Where(c => c.No == key));
+            IQueryable<DscQColumn> items = Get(datasource, path);
+            return SingleResult.Create(items.Where(i => i.No == key));
         }
     }
 }

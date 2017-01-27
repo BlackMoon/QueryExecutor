@@ -42,18 +42,8 @@ namespace queryExecutor.Controllers
         [EnableQuery]
         public SingleResult<DscQParameter> Get(string datasource, string path, long key)
         {
-            ClaimsPrincipal cp = (ClaimsPrincipal)User;
-
-            DscQParameterQuery parameterQuery = new DscQParameterQuery()
-            {
-                Path = path.Replace(DscQRouteHandler.RandomWord, "\\"),
-                DataSource = datasource,
-                UserId = cp.FindFirst(ClaimTypes.Name)?.Value,
-                Password = cp.FindFirst(BasicClaimTypes.Password)?.Value
-            };
-
-            DscQParameterQueryResult result = _queryDispatcher.Dispatch<DscQParameterQuery, DscQParameterQueryResult>(parameterQuery);
-            return SingleResult.Create(result.Items.Where(p => p.No == key).AsQueryable());
+            IQueryable<DscQParameter> items = Get(datasource, path);
+            return SingleResult.Create(items.Where(i => i.No == key));
         }
     }
 }
