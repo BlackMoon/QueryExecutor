@@ -4,8 +4,8 @@
   <xs:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQColumn" />
   <xs:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryParameter.Query" />
   <xs:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryParameter" />
-  <xs:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryData.Query" />
-  <xs:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd9" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryData" />
+  <xs:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryData.Query" />
+  <xs:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd10" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryData" />
   <xs:element name="GetColumns">
     <xs:complexType>
       <xs:sequence>

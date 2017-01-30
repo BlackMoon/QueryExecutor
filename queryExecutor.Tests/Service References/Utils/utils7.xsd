@@ -13,7 +13,9 @@
         <xs:sequence>
           <xs:element minOccurs="0" name="FieldCode" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OrderNo" type="xs:int" />
           <xs:element minOccurs="0" name="Precision" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="QueryNo" type="xs:long" />
           <xs:element minOccurs="0" name="Scale" nillable="true" type="xs:int" />
           <xs:element minOccurs="0" name="ValueType" nillable="true" type="q1:EValueType" />
         </xs:sequence>

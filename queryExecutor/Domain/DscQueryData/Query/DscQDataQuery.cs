@@ -28,12 +28,15 @@ namespace queryExecutor.Domain.DscQueryData.Query
         {
             int sum = 0;
 
-            unchecked
+            if (Parameters != null)
             {
-                // ReSharper disable once LoopCanBeConvertedToQuery
-                foreach (DscQParameter p in Parameters)
+                unchecked
                 {
-                    sum += p.GetHashCode();
+                    // ReSharper disable once LoopCanBeConvertedToQuery
+                    foreach (DscQParameter p in Parameters)
+                    {
+                        sum += p.GetHashCode();
+                    }
                 }
             }
 

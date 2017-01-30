@@ -180,9 +180,10 @@
       <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain" />
       <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryParameter.Query" />
       <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryParameter" />
-      <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryData.Query" />
-      <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd8" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
-      <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd9" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryData" />
+      <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.TdfFlexField" />
+      <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryData.Query" />
+      <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd9" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd10" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryData" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IUtils_GetColumns_InputMessage">

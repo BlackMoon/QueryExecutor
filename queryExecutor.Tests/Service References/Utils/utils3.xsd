@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryParameter" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.DscQueryParameter" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.TdfFlexField" />
   <xs:import schemaLocation="http://web.aquilon.ru:807/soap/utils.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/queryExecutor.Domain" />
   <xs:complexType name="ArrayOfDscQParameter">
     <xs:sequence>
@@ -12,12 +13,11 @@
       <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/queryExecutor.Domain" base="q1:KeyObject">
         <xs:sequence>
           <xs:element minOccurs="0" name="FieldCode" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="FormatMask" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FieldNo" type="xs:long" />
+          <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/queryExecutor.Domain.TdfFlexField" minOccurs="0" name="FlexField" nillable="true" type="q2:TdfFlexField" />
           <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="Precision" nillable="true" type="xs:int" />
-          <xs:element minOccurs="0" name="Scale" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="QueryNo" type="xs:long" />
           <xs:element minOccurs="0" name="Value" nillable="true" type="xs:anyType" />
-          <xs:element minOccurs="0" name="ValueType" nillable="true" type="q1:EValueType" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
