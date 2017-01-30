@@ -20,17 +20,20 @@ namespace queryExecutor.Domain.DscQColumn.Query
 
         public DscQColumnQueryResult Execute(DscQColumnQuery query)
         {
-            IEnumerable<DscQColumn> dscQColumns;
+            IEnumerable<DscQColumn> dscQColumns = Enumerable.Empty<DscQColumn>();
             try
             {
                 _dbManager.Open($"Data Source={query.DataSource};User Id={query.UserId};Password={query.Password}");
 
-                OracleDbContext ctx = _dbManager.DbContext.Cast<OracleDbContext>();
+                OracleDbContext ctx = _dbManager.DbContext as OracleDbContext;
 
-                dscQColumns = ctx.DscQColumns
-                    .Where(c => c.QueryNo == ctx.DscUtils_QueryFind(query.Path))
-                    .OrderBy(c => c.OrderNo)
-                    .ToList();
+                if (ctx != null)
+                {
+                    dscQColumns = ctx.DscQColumns
+                        .Where(c => c.QueryNo == ctx.DscUtils_QueryFind(query.Path))
+                        .OrderBy(c => c.OrderNo)
+                        .ToList();
+                }
             }
             finally
             {

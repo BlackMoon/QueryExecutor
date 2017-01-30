@@ -22,26 +22,13 @@ namespace queryExecutor.DbManager.Oracle
 
         public IDbConnection DbConnection => _dbConnection = _dbConnection ?? new OracleConnection();
 
-#if DBCONTEXT
         /// <summary>
         /// DbContext
         /// </summary>
         private OracleDbContext _dbContext;
 
-        public DbContext DbContext
-        {
-            get
-            {
-                if (_dbContext == null)
-                {
-                    ExecuteNonQuery(CommandType.StoredProcedure, "SYS$INSTANCE.INIT");
-                    _dbContext = new OracleDbContext(DbConnection, false);
-                }
+        public DbContext DbContext => _dbContext = _dbContext ?? new OracleDbContext(DbConnection, false);
 
-                return _dbContext;
-            }
-        }
-#endif
         /// <summary>
         /// DbTransaction
         /// </summary>
@@ -113,6 +100,7 @@ namespace queryExecutor.DbManager.Oracle
             {
                 DbConnection.ConnectionString = ConnectionString;
                 DbConnection.Open();
+                ExecuteNonQuery(CommandType.StoredProcedure, "SYS$INSTANCE.INIT");
             }
         }
 

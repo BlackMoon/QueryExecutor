@@ -9,9 +9,9 @@ namespace queryExecutor.DbManager
         string ConnectionString { get; set; }
 
         IDbConnection DbConnection { get; }
-#if DBCONTEXT
+
         DbContext DbContext { get; }
-#endif        
+      
         IDbTransaction Transaction { get; }
         IDataReader DataReader { get; }
         IDbCommand DbCommand { get; }
