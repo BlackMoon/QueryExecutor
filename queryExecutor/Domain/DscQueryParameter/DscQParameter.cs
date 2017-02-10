@@ -16,11 +16,14 @@ namespace queryExecutor.Domain.DscQueryParameter
         [Column("QUERY_NO")]
         public long QueryNo { get; set; }
 
-        [Column("NAME")]
-        public string Name { get; set; }
-        
+        [Column("IS_HIDDEN")]
+        public string IsHidden { get; set; }
+
         [Column("FIELD_CODE")]
         public string FieldCode { get; set; }
+
+        [Column("NAME")]
+        public string Name { get; set; }
 
         [ForeignKey("FieldNo")]
         public TdfFlexField.TdfFlexField FlexField { get; set; }

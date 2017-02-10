@@ -34,7 +34,7 @@ namespace queryExecutor.Domain.DscQueryParameter.Query
                 if (ctx != null)
                 {
                     dscQParameters = ctx.DscQParameters
-                        .Where(p => p.QueryNo == ctx.DscUtils_QueryFind(query.Path))
+                        .Where(p => p.QueryNo == ctx.DscUtils_QueryFind(query.Path) && p.IsHidden =="F")
                         .Include(p => p.FlexField)
                         .ToList();
                 }
