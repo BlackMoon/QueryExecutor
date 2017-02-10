@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
@@ -7,6 +8,7 @@ namespace queryExecutor.Domain.DscQueryParameter
     /// <summary>
     /// dsc$query_parameter
     /// </summary>
+    [DataContract]
     [Table("DSC$QUERY_PARAMETERS")]
     public class DscQParameter : KeyObject
     {
@@ -20,14 +22,18 @@ namespace queryExecutor.Domain.DscQueryParameter
         public string IsHidden { get; set; }
 
         [Column("FIELD_CODE")]
+        [DataMember]
         public string FieldCode { get; set; }
 
         [Column("NAME")]
+        [DataMember]
         public string Name { get; set; }
 
+        [DataMember]
         [ForeignKey("FieldNo")]
         public TdfFlexField.TdfFlexField FlexField { get; set; }
 
+        [DataMember]
         [NotMapped]
         public object Value { get; set; }
 
