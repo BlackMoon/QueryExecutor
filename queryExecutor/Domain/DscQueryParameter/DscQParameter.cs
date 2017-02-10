@@ -13,9 +13,11 @@ namespace queryExecutor.Domain.DscQueryParameter
     public class DscQParameter : KeyObject
     {
         [Column("FIELD_NO")]
+        [DataMember]
         public long FieldNo { get; set; }
 
         [Column("QUERY_NO")]
+        [DataMember]
         public long QueryNo { get; set; }
 
         [Column("IS_HIDDEN")]
