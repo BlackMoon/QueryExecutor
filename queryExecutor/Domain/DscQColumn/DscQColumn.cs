@@ -14,7 +14,7 @@ namespace queryExecutor.Domain.DscQColumn
     public class DscQColumn : KeyObject
     {
         [Column("QUERY_NO")]
-        public long QueryNo { get; set; }
+        public decimal QueryNo { get; set; }
 
         [Column("ORDER_NO")]
         public int OrderNo { get; set; }

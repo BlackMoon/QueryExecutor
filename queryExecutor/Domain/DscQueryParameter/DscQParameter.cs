@@ -18,7 +18,7 @@ namespace queryExecutor.Domain.DscQueryParameter
 
         [Column("QUERY_NO")]
         [DataMember]
-        public long QueryNo { get; set; }
+        public decimal QueryNo { get; set; }
 
         [Column("IS_HIDDEN")]
         public string IsHidden { get; set; }
