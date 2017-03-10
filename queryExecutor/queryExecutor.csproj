@@ -308,6 +308,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="CQRS\Job\IJob.cs" />
+    <Compile Include="CQRS\Job\IJobDispatcher.cs" />
+    <Compile Include="CQRS\Job\IStartupJob.cs" />
+    <Compile Include="CQRS\Job\JobDispatcher.cs" />
+    <Compile Include="DbManager\Oracle\Job\AddOracleEnvironmentVariables.cs" />
     <Compile Include="Domain\ErrorMessage.cs" />
     <Compile Include="Domain\KeyObject.cs" />
     <Compile Include="Domain\TdfFlexField\TdfFlexField.cs" />
