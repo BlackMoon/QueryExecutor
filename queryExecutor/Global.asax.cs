@@ -59,20 +59,6 @@ namespace queryExecutor
                 .AppSettings()
                 .CreateLogger();
 
-            OracleEnvironmentConfiguration config = (OracleEnvironmentConfiguration)ConfigurationManager.GetSection("oracleEnvironment");
-        
-            if (!string.IsNullOrEmpty(config.Nls_Lang))
-                Environment.SetEnvironmentVariable("NLS_LANG", config.Nls_Lang);
-
-            if (!string.IsNullOrEmpty(config.Oracle_Home))
-                Environment.SetEnvironmentVariable("ORACLE_HOME", config.Oracle_Home);
-
-            if (!string.IsNullOrEmpty(config.Path))
-                Environment.SetEnvironmentVariable("PATH", $"{config.Path};{Environment.GetEnvironmentVariable("PATH")}");
-
-            if (!string.IsNullOrEmpty(config.Tns_Admin))
-                Environment.SetEnvironmentVariable("TNS_ADMIN", config.Tns_Admin);
-
             // svc route
             RouteTable.Routes.Add(new ServiceRoute("soap/utils.svc", new BehaviorHostFactory(), typeof(Utils)));
                 

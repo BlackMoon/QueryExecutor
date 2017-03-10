@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
 namespace queryExecutor.Domain.DscQueryParameter
@@ -14,17 +13,21 @@ namespace queryExecutor.Domain.DscQueryParameter
         public long FieldNo { get; set; }
 
         [Column("QUERY_NO")]
-        public long QueryNo { get; set; }
+        public decimal QueryNo { get; set; }
 
-        [Column("NAME")]
-        public string Name { get; set; }
-        
+        [Column("IS_HIDDEN")]
+        public string IsHidden { get; set; }
+
         [Column("FIELD_CODE")]
         public string FieldCode { get; set; }
 
+        [Column("NAME")]
+        public string Name { get; set; }
+
+       
         [ForeignKey("FieldNo")]
         public TdfFlexField.TdfFlexField FlexField { get; set; }
-
+       
         [NotMapped]
         public object Value { get; set; }
 

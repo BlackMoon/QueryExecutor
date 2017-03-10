@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 
 // ReSharper disable NonReadonlyMemberInGetHashCode
 
@@ -12,7 +13,7 @@ namespace queryExecutor.Domain.DscQColumn
     public class DscQColumn : KeyObject
     {
         [Column("QUERY_NO")]
-        public long QueryNo { get; set; }
+        public decimal QueryNo { get; set; }
 
         [Column("ORDER_NO")]
         public int OrderNo { get; set; }
@@ -31,11 +32,5 @@ namespace queryExecutor.Domain.DscQColumn
 
         [Column("VALUE_TYPE_NO")]
         public EValueType? ValueType { get; set; }
-
-        
-        public static long QueryFind(string path)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

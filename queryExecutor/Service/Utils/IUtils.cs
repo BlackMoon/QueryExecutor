@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ServiceModel;
+﻿using System.ServiceModel;
 using queryExecutor.Domain.DscQColumn;
 using queryExecutor.Domain.DscQColumn.Query;
 using queryExecutor.Domain.DscQueryData;

@@ -14,8 +14,10 @@ using DryIoc.WebApi;
 using Microsoft.OData.Edm;
 using Microsoft.Owin;
 using Owin;
+using queryExecutor.CQRS.Job;
 using queryExecutor.CQRS.Query;
 using queryExecutor.DbManager;
+using queryExecutor.DbManager.Oracle;
 using queryExecutor.Domain.DscQColumn;
 using queryExecutor.Domain.DscQueryData;
 using queryExecutor.Domain.DscQueryParameter;
@@ -51,11 +53,12 @@ namespace queryExecutor
             {
                 Type[] interfaces = type.GetInterfaces();
 
-                bool assignedFromDispatcher = interfaces.Any(i => i.FullName == typeof(IQueryDispatcher).FullName);
-                if (assignedFromDispatcher || 
-                        interfaces.Any(i => i.FullName == typeof(IInterceptor).FullName || 
-                                   i.FullName == typeof(IQuery).FullName || 
-                                   (i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>))))
+                bool assignedFromDispatcher = interfaces.Any(i => i.IsAssignableTo(typeof(IJobDispatcher)) || i.IsAssignableTo(typeof (IQueryDispatcher)));
+                
+                if (assignedFromDispatcher || interfaces.Any(i => i.IsAssignableTo(typeof(IInterceptor)) || 
+                    i.IsAssignableTo(typeof(IJob)) || 
+                    i.IsAssignableTo(typeof(IQuery)) ||
+                    (i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>))))
                 {
                     // all dispatchers --> Reuse.InCurrentScope
                     IReuse reuse = assignedFromDispatcher
@@ -77,6 +80,7 @@ namespace queryExecutor
                 }
             });
 
+            Container.RegisterInstance((IOracleEnvironmentConfiguration)System.Configuration.ConfigurationManager.GetSection("oracleEnvironment"));
             Container.RegisterInstance(System.Configuration.ConfigurationManager.AppSettings["ProviderName"], serviceKey: "ProviderName");
             Container.Register(
                 reuse: Reuse.InResolutionScope,
@@ -88,7 +92,11 @@ namespace queryExecutor
 
             Container.UseInstance(Container);
             #endregion
-           
+
+            // Startup Jobs
+            IJobDispatcher dispatcher = Container.Resolve<IJobDispatcher>(IfUnresolved.ReturnDefault);
+            dispatcher?.Dispatch<IStartupJob>();
+
             config.Filters.Add(new GlobalExceptionFilter());
             
             var odataFormatters = ODataMediaTypeFormatters.Create(new SkipNullValueODataSerializerProvider(), new DefaultODataDeserializerProvider());

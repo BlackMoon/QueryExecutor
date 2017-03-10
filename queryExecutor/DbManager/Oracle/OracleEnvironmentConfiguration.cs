@@ -21,11 +21,7 @@ namespace queryExecutor.DbManager.Oracle
     public class OracleEnvironmentConfiguration : ConfigurationSection, IOracleEnvironmentConfiguration
     {
         [ConfigurationProperty("oracleHome")]
-        public string Oracle_Home
-        {
-            get { return (string) this["oracleHome"]; }
-            set { this["oracleHome"] = value; }
-        }
+        public string Oracle_Home => (string) this["oracleHome"];
 
         [ConfigurationProperty("nlsLang" )]
         public string Nls_Lang => (string)this["nlsLang"];
