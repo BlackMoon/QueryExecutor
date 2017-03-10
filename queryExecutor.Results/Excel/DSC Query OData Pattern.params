@@ -1,0 +1,29 @@
+﻿{
+    "OData": {
+        "URL": "http://webtest.aquilon.ru:807"
+        , "Connection": {
+            "User": "TNND"
+            , "Password": ""
+            , "Server": "aql.tnnd"
+        }
+    }
+    , "UI":{
+        "Connection": {
+            "UserChangeAllow": true
+            , "PasswordChangeAllow": true
+            , "ServerChangeAllow": false
+        }
+        , "WorkBook": {
+            "LoginDialogShow": true
+        }
+        , "WorkSheet": {
+            "Параметры": {
+                "Visible": true
+            }
+            , "Данные": {
+                "Visible": true
+                , "ChangeAllow": true
+            }
+        }
+    }
+}
