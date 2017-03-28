@@ -1,0 +1,689 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<export version="2.0.2.0" date="28.03.2017 10:27:08">
+  <information>
+    <local_group_no value="10000000"/>
+    <parameters>
+      <parameter type="160" no="506020118" name="queries_groups">
+        <rules>
+          <rule index="1">
+            <item index="1" type_no="160" action_type="EXPORT" direction="CHILDS" links_count="1" group_item="0" filter=""/>
+            <item index="2" type_no="10" action_type="EXPORT" direction="PARENTS" links_count="20" group_item="0" filter=""/>
+          </rule>
+          <rule index="2">
+            <item index="1" type_no="160" action_type="EXPORT" direction="CHILDS" links_count="1" group_item="0" filter=""/>
+            <item index="2" type_no="161" action_type="EXPORT" direction="CHILDS" links_count="1" group_item="0" filter=""/>
+          </rule>
+          <rule index="3">
+            <item index="1" type_no="160" action_type="EXPORT" direction="CHILDS" links_count="1" group_item="0" filter=""/>
+            <item index="2" type_no="162" action_type="EXPORT" direction="CHILDS" links_count="1" group_item="0" filter=""/>
+            <item index="3" type_no="10" action_type="EXPORT" direction="PARENTS" links_count="20" group_item="0" filter=""/>
+          </rule>
+          <rule index="4">
+            <item index="1" type_no="160" action_type="EXPORT" direction="CHILDS" links_count="1" group_item="0" filter=""/>
+            <item index="2" type_no="162" action_type="EXPORT" direction="CHILDS" links_count="1" group_item="0" filter=""/>
+            <item index="3" type_no="60" action_type="EXPORT" direction="PARENTS" links_count="1" group_item="0" filter=""/>
+            <item index="4" type_no="10" action_type="EXPORT" direction="PARENTS" links_count="20" group_item="0" filter=""/>
+          </rule>
+        </rules>
+      </parameter>
+      <parameter type="160" no="506020114" name="queries_by_group">
+        <rules>
+          <rule index="1">
+            <item index="1" type_no="160" action_type="EXPORT" direction="CHILDS" links_count="1" group_item="0" filter=""/>
+            <item index="2" type_no="10" action_type="EXPORT" direction="PARENTS" links_count="20" group_item="0" filter=""/>
+          </rule>
+          <rule index="2">
+            <item index="1" type_no="160" action_type="EXPORT" direction="CHILDS" links_count="1" group_item="0" filter=""/>
+            <item index="2" type_no="161" action_type="EXPORT" direction="CHILDS" links_count="1" group_item="0" filter=""/>
+          </rule>
+          <rule index="3">
+            <item index="1" type_no="160" action_type="EXPORT" direction="CHILDS" links_count="1" group_item="0" filter=""/>
+            <item index="2" type_no="162" action_type="EXPORT" direction="CHILDS" links_count="1" group_item="0" filter=""/>
+            <item index="3" type_no="10" action_type="EXPORT" direction="PARENTS" links_count="20" group_item="0" filter=""/>
+          </rule>
+          <rule index="4">
+            <item index="1" type_no="160" action_type="EXPORT" direction="CHILDS" links_count="1" group_item="0" filter=""/>
+            <item index="2" type_no="162" action_type="EXPORT" direction="CHILDS" links_count="1" group_item="0" filter=""/>
+            <item index="3" type_no="60" action_type="EXPORT" direction="PARENTS" links_count="1" group_item="0" filter=""/>
+            <item index="4" type_no="10" action_type="EXPORT" direction="PARENTS" links_count="20" group_item="0" filter=""/>
+          </rule>
+        </rules>
+      </parameter>
+    </parameters>
+  </information>
+  <objects>
+    <external>
+      <global>
+        <object no="910001" type_no="102"/>
+        <object no="915004" type_no="102"/>
+        <object no="915003" type_no="102"/>
+        <object no="915001" type_no="102"/>
+      </global>
+      <local>
+        <object no="19258024" type_no="10" type_name="ГРУППА_ОБЪЕКТОВ">
+          <key name="name">
+            <fields>
+              <field name="name" value_type="915003" value="Столбцы к запросам"/>
+            </fields>
+            <groups>
+              <group no="10000001"/>
+            </groups>
+          </key>
+        </object>
+        <object no="506020119" type_no="10" type_name="ГРУППА_ОБЪЕКТОВ">
+          <key name="name">
+            <fields>
+              <field name="name" value_type="915003" value="506020118"/>
+            </fields>
+            <groups>
+              <group no="19258024"/>
+            </groups>
+          </key>
+        </object>
+        <object no="506020115" type_no="10" type_name="ГРУППА_ОБЪЕКТОВ">
+          <key name="name">
+            <fields>
+              <field name="name" value_type="915003" value="506020114"/>
+            </fields>
+            <groups>
+              <group no="19258024"/>
+            </groups>
+          </key>
+        </object>
+      </local>
+    </external>
+    <export>
+      <object no="10000001" type_no="10" name="СПРАВОЧНИКИ">
+        <block short_name="GROUP" name="ГРУППА">
+          <groups>
+            <group no="10000000"/>
+          </groups>
+          <fields>
+            <field type="915003" name="name" value="СПРАВОЧНИКИ"/>
+            <field type="915003" name="description" value="Root of list&apos;s tree"/>
+            <field type="915005" name="make_flat" value="F"/>
+            <field type="915008" name="is_open" value="T"/>
+          </fields>
+          <symbols>
+            <symbol no="910001"/>
+          </symbols>
+          <blocks/>
+        </block>
+      </object>
+      <object no="11391133" type_no="10" name="Запросы к базе данных">
+        <block short_name="GROUP" name="ГРУППА">
+          <groups>
+            <group no="10000001"/>
+          </groups>
+          <fields>
+            <field type="915003" name="name" value="Запросы к базе данных"/>
+            <field type="915005" name="make_flat" value="F"/>
+            <field type="915008" name="is_open" value="T"/>
+          </fields>
+          <symbols>
+            <symbol no="910001"/>
+          </symbols>
+          <blocks/>
+        </block>
+      </object>
+      <object no="348547205" type_no="10" name="Служебные настройки">
+        <block short_name="GROUP" name="ГРУППА">
+          <groups>
+            <group no="11391133"/>
+          </groups>
+          <fields>
+            <field type="915003" name="code" value="Служебные настройки"/>
+            <field type="915003" name="name" value="Служебные настройки"/>
+            <field type="915003" name="description" value="Служебные настройки"/>
+            <field type="915005" name="make_flat" value="F"/>
+            <field type="915008" name="is_open" value="T"/>
+          </fields>
+          <symbols>
+            <symbol no="910001"/>
+          </symbols>
+          <blocks/>
+        </block>
+      </object>
+      <object no="506020112" type_no="10" name="OData Service">
+        <block short_name="GROUP" name="ГРУППА">
+          <groups>
+            <group no="348547205"/>
+          </groups>
+          <fields>
+            <field type="915003" name="code" value="OData Service"/>
+            <field type="915003" name="name" value="OData Service"/>
+            <field type="915005" name="make_flat" value="F"/>
+            <field type="915008" name="is_open" value="T"/>
+          </fields>
+          <symbols>
+            <symbol no="910001"/>
+          </symbols>
+          <blocks/>
+        </block>
+      </object>
+      <object no="10000195" type_no="10" name="Настраиваемые поля ввода">
+        <block short_name="GROUP" name="ГРУППА">
+          <groups>
+            <group no="10000001"/>
+          </groups>
+          <fields>
+            <field type="915003" name="name" value="Настраиваемые поля ввода"/>
+            <field type="915005" name="make_flat" value="F"/>
+            <field type="915008" name="is_open" value="T"/>
+          </fields>
+          <symbols>
+            <symbol no="910001"/>
+          </symbols>
+          <blocks/>
+        </block>
+      </object>
+      <object no="405452940" type_no="10" name="Параметры функций">
+        <block short_name="GROUP" name="ГРУППА">
+          <groups>
+            <group no="10000195"/>
+          </groups>
+          <fields>
+            <field type="915003" name="code" value="Параметры функций"/>
+            <field type="915003" name="name" value="Параметры функций"/>
+            <field type="915003" name="description" value="Параметры функций"/>
+            <field type="915005" name="make_flat" value="F"/>
+            <field type="915008" name="is_open" value="T"/>
+          </fields>
+          <symbols>
+            <symbol no="910001"/>
+          </symbols>
+          <blocks/>
+        </block>
+      </object>
+      <object no="19258030" type_no="10" name="Параметры к запросам">
+        <block short_name="GROUP" name="ГРУППА">
+          <groups>
+            <group no="10000001"/>
+          </groups>
+          <fields>
+            <field type="915003" name="name" value="Параметры к запросам"/>
+            <field type="915005" name="make_flat" value="F"/>
+            <field type="915008" name="is_open" value="T"/>
+          </fields>
+          <symbols>
+            <symbol no="910001"/>
+          </symbols>
+          <blocks/>
+        </block>
+      </object>
+      <object no="432089588" type_no="10" name="Часто используемые">
+        <block short_name="GROUP" name="ГРУППА">
+          <groups>
+            <group no="10000195"/>
+          </groups>
+          <fields>
+            <field type="915003" name="code" value="Часто используемые"/>
+            <field type="915003" name="name" value="Часто используемые"/>
+            <field type="915005" name="make_flat" value="F"/>
+            <field type="915008" name="is_open" value="T"/>
+          </fields>
+          <symbols>
+            <symbol no="910001"/>
+          </symbols>
+          <blocks/>
+        </block>
+      </object>
+      <object no="506020118" type_no="160" name="queries_groups">
+        <block short_name="query" name="query">
+          <groups>
+            <group no="506020113"/>
+          </groups>
+          <fields>
+            <field type="915003" name="name" value="queries_groups"/>
+            <field type="915003" name="type_name" value="SQL"/>
+            <field type="915005" name="readonly" value="F"/>
+            <field type="915003" name="code" value="queries_groups"/>
+          </fields>
+          <symbols>
+            <symbol no="910001"/>
+          </symbols>
+          <blocks>
+            <block short_name="property" name="property"/>
+            <block short_name="text" name="text">
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="1"/>
+                  <field type="915003" name="line" value="with"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="2"/>
+                  <field type="915003" name="line" value="  groups(no, path) as"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="3"/>
+                  <field type="915003" name="line" value="  ("/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="4"/>
+                  <field type="915003" name="line" value="    select --+ USE_NL(ogo g)"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="5"/>
+                  <field type="915003" name="line" value="      g.no"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="6"/>
+                  <field type="915003" name="line" value="      , g.name"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="7"/>
+                  <field type="915003" name="line" value="    from"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="8"/>
+                  <field type="915003" name="line" value="      obj$group_objects ogo"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="9"/>
+                  <field type="915003" name="line" value="      , obj$groups g"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="10"/>
+                  <field type="915003" name="line" value="    where"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="11"/>
+                  <field type="915003" name="line" value="      ogo.group_no = dsc$query_service.get_local_list_group_no"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="12"/>
+                  <field type="915003" name="line" value="      and g.no = ogo.object_no"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="13"/>
+                  <field type="915003" name="line" value="    union all"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="14"/>
+                  <field type="915003" name="line" value="    select --+ USE_NL(pg ogo g)"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="15"/>
+                  <field type="915003" name="line" value="      g.no"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="16"/>
+                  <field type="915003" name="line" value="      , pg.path || &apos;/&apos; || g.name"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="17"/>
+                  <field type="915003" name="line" value="    from"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="18"/>
+                  <field type="915003" name="line" value="      groups pg"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="19"/>
+                  <field type="915003" name="line" value="      , obj$group_objects ogo"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="20"/>
+                  <field type="915003" name="line" value="      , obj$groups g"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="21"/>
+                  <field type="915003" name="line" value="    where"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="22"/>
+                  <field type="915003" name="line" value="      ogo.group_no = pg.no"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="23"/>
+                  <field type="915003" name="line" value="      and g.no = ogo.object_no"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="24"/>
+                  <field type="915003" name="line" value="  )"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="25"/>
+                  <field type="915003" name="line" value="select"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="26"/>
+                  <field type="915003" name="line" value="  g.path as &quot;Наименование&quot;"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="27"/>
+                  <field type="915003" name="line" value="  , g.no as &quot;ID&quot;"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="28"/>
+                  <field type="915003" name="line" value="from"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="29"/>
+                  <field type="915003" name="line" value="  groups g"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="30"/>
+                  <field type="915003" name="line" value="order by"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="31"/>
+                  <field type="915003" name="line" value="  1"/>
+                </fields>
+              </record>
+            </block>
+          </blocks>
+        </block>
+      </object>
+      <object no="506020114" type_no="160" name="queries_by_group">
+        <block short_name="query" name="query">
+          <groups>
+            <group no="506020113"/>
+          </groups>
+          <fields>
+            <field type="915003" name="name" value="queries_by_group"/>
+            <field type="915003" name="type_name" value="SQL"/>
+            <field type="915005" name="readonly" value="F"/>
+            <field type="915003" name="code" value="queries_by_group"/>
+          </fields>
+          <symbols>
+            <symbol no="910001"/>
+          </symbols>
+          <blocks>
+            <block short_name="property" name="property"/>
+            <block short_name="text" name="text">
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="1"/>
+                  <field type="915003" name="line" value="select --+ USE_NL(ogo q)"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="2"/>
+                  <field type="915003" name="line" value="  q.name as &quot;Наименование&quot;"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="3"/>
+                  <field type="915003" name="line" value="from"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="4"/>
+                  <field type="915003" name="line" value="  obj$group_objects ogo"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="5"/>
+                  <field type="915003" name="line" value="  , dsc$queries q"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="6"/>
+                  <field type="915003" name="line" value="where"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="7"/>
+                  <field type="915003" name="line" value="  ogo.group_no = :pgroup_no"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="8"/>
+                  <field type="915003" name="line" value="  and q.no = ogo.object_no"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="9"/>
+                  <field type="915003" name="line" value="order by"/>
+                </fields>
+              </record>
+              <record>
+                <fields>
+                  <field type="915003" name="type_name" value="SQL"/>
+                  <field type="915001" name="order_no" value="10"/>
+                  <field type="915003" name="line" value="  1"/>
+                </fields>
+              </record>
+            </block>
+          </blocks>
+        </block>
+      </object>
+      <object no="506020113" type_no="10" name="Excel Support">
+        <block short_name="GROUP" name="ГРУППА">
+          <groups>
+            <group no="506020112"/>
+          </groups>
+          <fields>
+            <field type="915003" name="code" value="Excel Support"/>
+            <field type="915003" name="name" value="Excel Support"/>
+            <field type="915005" name="make_flat" value="F"/>
+            <field type="915008" name="is_open" value="T"/>
+          </fields>
+          <symbols>
+            <symbol no="910001"/>
+          </symbols>
+          <blocks/>
+        </block>
+      </object>
+      <object no="506020116" type_no="161" name="Наименование">
+        <block short_name="column" name="column">
+          <groups/>
+          <column_path value=""/>
+          <fields>
+            <field type="915004" name="query_no" value="506020114"/>
+            <field type="915001" name="order_no" value="3"/>
+            <field type="915003" name="field_code" value="Наименование"/>
+            <field type="915003" name="name" value="Наименование"/>
+            <field type="915003" name="description" value="Наименование"/>
+            <field type="915003" name="type_name" value="CHAR"/>
+            <field type="915001" name="precision" value="0"/>
+            <field type="915001" name="scale" value="0"/>
+            <field type="915001" name="grid_width" value="100"/>
+            <field type="915001" name="out_form_width" value="100"/>
+            <field type="915004" name="value_type_no" value="915003"/>
+          </fields>
+          <symbols>
+            <symbol no="910001"/>
+          </symbols>
+        </block>
+      </object>
+      <object no="506020120" type_no="161" name="ID">
+        <block short_name="column" name="column">
+          <groups/>
+          <column_path value=""/>
+          <fields>
+            <field type="915004" name="query_no" value="506020118"/>
+            <field type="915001" name="order_no" value="2"/>
+            <field type="915003" name="field_code" value="ID"/>
+            <field type="915003" name="name" value="ID"/>
+            <field type="915003" name="description" value="ID"/>
+            <field type="915003" name="type_name" value="NUMBER"/>
+            <field type="915001" name="precision" value="2"/>
+            <field type="915001" name="scale" value="15"/>
+            <field type="915001" name="grid_width" value="100"/>
+            <field type="915001" name="out_form_width" value="100"/>
+            <field type="915004" name="value_type_no" value="915001"/>
+          </fields>
+          <symbols>
+            <symbol no="910001"/>
+          </symbols>
+        </block>
+      </object>
+      <object no="506020117" type_no="162" name="PGROUP_NO">
+        <block short_name="parameter" name="parameter">
+          <groups>
+            <group no="19258030"/>
+          </groups>
+          <fields>
+            <field type="915004" name="query_no" value="506020114"/>
+            <field type="915001" name="order_no" value="1"/>
+            <field type="915003" name="field_code" value="PGROUP_NO"/>
+            <field type="915003" name="name" value="PGROUP_NO"/>
+            <field type="915004" name="field_no" value="405452964"/>
+            <field type="915008" name="is_hidden" value="F"/>
+            <field type="915008" name="is_obligatory" value="F"/>
+          </fields>
+          <symbols>
+            <symbol no="910001"/>
+          </symbols>
+        </block>
+      </object>
+      <object no="506020121" type_no="161" name="Наименование">
+        <block short_name="column" name="column">
+          <groups/>
+          <column_path value=""/>
+          <fields>
+            <field type="915004" name="query_no" value="506020118"/>
+            <field type="915001" name="order_no" value="3"/>
+            <field type="915003" name="field_code" value="Наименование"/>
+            <field type="915003" name="name" value="Наименование"/>
+            <field type="915003" name="description" value="Наименование"/>
+            <field type="915003" name="type_name" value="CHAR"/>
+            <field type="915001" name="precision" value="0"/>
+            <field type="915001" name="scale" value="0"/>
+            <field type="915001" name="grid_width" value="100"/>
+            <field type="915001" name="out_form_width" value="100"/>
+            <field type="915004" name="value_type_no" value="915003"/>
+          </fields>
+          <symbols>
+            <symbol no="910001"/>
+          </symbols>
+        </block>
+      </object>
+      <object no="405452964" type_no="60" name="Объект системы">
+        <block short_name="flex_field" name="Поле">
+          <groups>
+            <group no="405452940"/>
+            <group no="432089588"/>
+          </groups>
+          <fields>
+            <field type="915003" name="code" value="Объект системы"/>
+            <field type="915003" name="name" value="Объект системы"/>
+            <field type="915003" name="description" value="Объект системы"/>
+            <field type="915004" name="value_type_no" value="915004"/>
+            <field type="915001" name="scale" value="0"/>
+            <field type="915001" name="precision" value="0"/>
+          </fields>
+          <symbols>
+            <symbol no="910001"/>
+          </symbols>
+          <blocks>
+            <block short_name="list" name="Справочник"/>
+            <block short_name="value_set" name="Набор_значений"/>
+            <block short_name="value" name="Значение"/>
+            <block short_name="range" name="Диапазон"/>
+          </blocks>
+        </block>
+      </object>
+    </export>
+  </objects>
+</export>
