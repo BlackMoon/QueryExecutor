@@ -2,20 +2,20 @@
     "OData": {
         "URL": "http://web.aquilon.ru:807"
         , "Connection": {
-            "User": "ECO"
+            "User": "TNND"
             , "Password": ""
-            , "Server": "aql.eco"
+            , "Server": "aql.tnnd"
         }
         , "Query": {
             "Path": "Test"
             , "Code": "all_objects"
             , "Parameters":[
                 {
-                    "Name":"PREC_COUNT"
+                    "Name":"PREC_COUNT1"
                     , "Value": 1000
                 }
                 , {
-                    "Name":"PDATE"
+                    "Name":"PDATE1"
                     , "Value": "01.01.2000"
                 }
             ]

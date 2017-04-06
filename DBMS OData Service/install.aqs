@@ -1,0 +1,13 @@
+<script>
+  installer_version = 2.0
+  tag_title = OData Service
+
+  <import data>
+    name = Импорт данных: 160_dsc$query_Excel Support_data
+    source = 160_dsc$query_Excel Support_data.xml
+    tag_title = Импорт данных: 160_dsc$query_Excel Support_data
+    tag_description = Импорт данных V2 из 160_dsc$query_Excel Support_data.xml
+  </import data>
+
+
+</script>
