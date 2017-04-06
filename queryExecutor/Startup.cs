@@ -24,6 +24,7 @@ using queryExecutor.Domain.DscQueryParameter;
 using queryExecutor.Interception;
 using queryExecutor.Interception.Attribute;
 using queryExecutor.OData;
+using Serilog;
 
 [assembly: OwinStartup("Startup", typeof(queryExecutor.Startup))]
 
@@ -86,6 +87,9 @@ namespace queryExecutor
                 reuse: Reuse.InResolutionScope,
                 made: Made.Of(() => DbManagerFactory.CreateDbManager(Arg.Of<string>("ProviderName"), null), requestIgnored => string.Empty)
                 );
+
+            // IDbManager initialiazation
+            Container.RegisterInitializer<IDbManager>((m, r) => m.Log = Log.Logger.Debug);
 
             // cache manager
             Container.Register(reuse: Reuse.Singleton, made: Made.Of(() => CacheFactory.FromConfiguration<object>("webCache")));

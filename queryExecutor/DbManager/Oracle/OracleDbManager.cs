@@ -27,7 +27,19 @@ namespace queryExecutor.DbManager.Oracle
         /// </summary>
         private OracleDbContext _dbContext;
 
-        public DbContext DbContext => _dbContext = _dbContext ?? new OracleDbContext(DbConnection, false);
+        public DbContext DbContext
+        {
+            get
+            {
+                if (_dbContext == null)
+                {
+                    _dbContext = new OracleDbContext(DbConnection, false);
+                    _dbContext.Database.Log += Log;
+                }
+                return _dbContext;
+            }
+        }
+        
 
         /// <summary>
         /// DbTransaction
@@ -43,6 +55,8 @@ namespace queryExecutor.DbManager.Oracle
         public IDbCommand DbCommand { get; private set; }
 
         private readonly IList<OracleParameter> _dbParameters = new List<OracleParameter>();
+
+        public Action<string> Log { get; set; }
 
         // ReSharper disable once CoVariantArrayConversion
         public IDbDataParameter[] DbParameters => _dbParameters.ToArray();

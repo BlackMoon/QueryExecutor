@@ -16,6 +16,12 @@ namespace queryExecutor.DbManager
         IDataReader DataReader { get; }
         IDbCommand DbCommand { get; }
         IDbDataParameter[] DbParameters { get; }
+
+        /// <summary>
+        /// Set this property to log the SQL
+        /// </summary>
+        Action<string> Log { get; set; }
+
         void AddParameter(IDbDataParameter dataParameter);
         IDbDataParameter AddParameter(string name, object value);
         IDbDataParameter AddParameter(string name, object value, ParameterDirection direction);
